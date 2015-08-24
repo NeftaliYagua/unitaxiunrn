@@ -4,12 +4,14 @@ public class Taxi {
 	private String patente;
 	private String chofer;
 	private String licencia;
+	private String empresa;
 	
-	public Taxi(String patente, String chofer, String licencia) {
+	public Taxi(String patente, String chofer, String licencia, String empresa) {
 		super();
 		this.patente = patente;
 		this.chofer = chofer;
 		this.licencia = licencia;
+		this.empresa = empresa;
 	}
 
 	public String getPatente() {
@@ -34,6 +36,14 @@ public class Taxi {
 
 	public void setLicencia(String licencia) {
 		this.licencia = licencia;
+	}
+	
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 	
 }
