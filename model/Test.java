@@ -17,7 +17,7 @@ public class Test {
 		
 		Pedido p = new Pedido(0.0, formatoFecha.format(actual), formatoHora.format(actual), Pedido.FormaDePago.EFECTIVO, u);
 		
-		Taxi t = new Taxi("abc 123","El rey","Licenciado","el 28 mil");
+		Taxi t = new Taxi("abc 123","El rey","Licenciado","el 28 mil", Taxi.Estado.LIBRE);
 		
 		
 
