@@ -13,11 +13,13 @@ public class Test {
 		
 		// Inicialización de los datos
 		
-		Taxi t = new Taxi("abc 123","El rey","Licenciado","el 28 mil", Taxi.Estado.LIBRE);
+		Taxi t = new Taxi("abc 123","El rey","Licenciado","el 28 mil", Taxi.Estado.OCUPADO);
+		Taxi t2 = new Taxi("yyy 321","Roberrrrrrto","Licena2","el 28 mil", Taxi.Estado.LIBRE);
 		Usuario u = new Usuario("Lautaro","Lopez","12345679","llopez@domain.com","97654321");
 		Pedido p = new Pedido(100.0, formatoFecha.format(actual), formatoHora.format(actual), Pedido.FormaDePago.EFECTIVO, u);
 		RadioTaxi radioTaxi = new RadioTaxi();
 		radioTaxi.addTaxi(t);
+		radioTaxi.addTaxi(t2);
 		
 		// Fin inicialización
 		
