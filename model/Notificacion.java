@@ -2,12 +2,17 @@ package model;
 
 public class Notificacion {
 	private String mensaje;
-	private double distancia;
+	private String tiempo;
 	
-	public Notificacion(String mensaje, double distancia) {
+	
+	public Notificacion() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Notificacion(String mensaje, String tiempo) {
 		super();
 		this.mensaje = mensaje;
-		this.distancia = distancia;
+		this.tiempo = tiempo;
 	}
 
 	public String getMensaje() {
@@ -18,12 +23,16 @@ public class Notificacion {
 		this.mensaje = mensaje;
 	}
 
-	public double getDistancia() {
-		return distancia;
+	public String getTiempo() {
+		return tiempo;
 	}
 
-	public void setDistancia(double distancia) {
-		this.distancia = distancia;
+	public void setTiempo(String tiempo) {
+		this.tiempo = tiempo;
+	}
+	
+	public void notificar(Usuario u){
+		System.out.println(u.getNombre()+" "+u.getApellido()+" "+this.mensaje+" en "+this.tiempo);
 	}
 	
 }

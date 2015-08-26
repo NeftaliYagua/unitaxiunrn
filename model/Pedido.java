@@ -1,21 +1,31 @@
 package model;
 
 public class Pedido {
-	enum FormaDePago{CREDITO, DEBITO, EFECTIVO};
+	enum FormaDePago {
+		CREDITO, DEBITO, EFECTIVO
+	}; 
+	
+	enum Estado{
+		PENDIENTE, EN_CURSO, FINALIZADO
+	}
 	
 	private double precio;
 	private String fecha;
 	private String hora;
 	private FormaDePago pago;
+	private Estado estado;
 	private Usuario usuario;
-	
-	public Pedido(double precio, String fecha, String hora, FormaDePago pago, Usuario usuario) {
+	private Taxi taxi;
+
+	public Pedido(double precio, String fecha, String hora, FormaDePago pago,
+			Usuario usuario) {
 		super();
 		this.precio = precio;
 		this.fecha = fecha;
 		this.hora = hora;
 		this.pago = pago;
 		this.usuario = usuario;
+		this.estado  = Estado.PENDIENTE;
 	}
 
 	public double getPrecio() {
@@ -57,5 +67,27 @@ public class Pedido {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public Taxi getTaxi() {
+		return taxi;
+	}
+
+	public void setTaxi(Taxi taxi) {
+		this.taxi = taxi;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 	
+	
+	
+	
+	
+	
+
 }
