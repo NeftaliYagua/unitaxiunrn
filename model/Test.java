@@ -11,13 +11,38 @@ public class Test {
 		SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss");
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy"); 
 		
-		Usuario u = new Usuario("Lautaro","Lopez","12345679","llopez@domain.com","97654321");
-		
-		Notificacion n = new Notificacion("Llegando", 20);
-		
-		Pedido p = new Pedido(0.0, formatoFecha.format(actual), formatoHora.format(actual), Pedido.FormaDePago.EFECTIVO, u);
+		// Inicialización de los datos
 		
 		Taxi t = new Taxi("abc 123","El rey","Licenciado","el 28 mil", Taxi.Estado.LIBRE);
+		Usuario u = new Usuario("Lautaro","Lopez","12345679","llopez@domain.com","97654321");
+		Pedido p = new Pedido(100.0, formatoFecha.format(actual), formatoHora.format(actual), Pedido.FormaDePago.EFECTIVO, u);
+		RadioTaxi radioTaxi = new RadioTaxi();
+		radioTaxi.addTaxi(t);
+		
+		// Fin inicialización
+		
+		//Inicio del flujo de datos		
+		
+		radioTaxi.addPedidoPendiente(p);
+		radioTaxi.asignarTaxi();
+		
+		p.getTaxi().getNotificacion().setMensaje("Voy");
+		
+		p.getTaxi().getNotificacion().setTiempo("20");;
+		
+		p.getTaxi().getNotificacion().notificar(p.getUsuario());
+		
+		p.setEstado(Pedido.Estado.FINALIZADO);
+		
+		p.getTaxi().setEstado(Taxi.Estado.LIBRE);
+		
+		
+		
+		//Notificacion n = new Notificacion("Llegando", 20);
+		
+		
+		
+		
 		
 		
 
