@@ -10,6 +10,7 @@ public class Taxi {
 	private String licencia;
 	private String empresa;
 	private Estado estado;
+	private Notificacion notificacion;
 	
 	public Taxi(String patente, String chofer, String licencia, String empresa, Estado estado) {
 		super();
@@ -18,6 +19,7 @@ public class Taxi {
 		this.licencia = licencia;
 		this.empresa = empresa;
 		this.estado = estado;
+		this.notificacion = new Notificacion();
 	}
 
 	public Taxi() {
@@ -63,5 +65,15 @@ public class Taxi {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+
+	public Notificacion getNotificacion() {
+		return notificacion;
+	}
+
+	public void setNotificacion(Notificacion notificacion) {
+		this.notificacion = notificacion;
+	}
+	
+	
 	
 }
