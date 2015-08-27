@@ -1,11 +1,11 @@
 package model;
 
 public class Pedido {
-	enum FormaDePago {
+	public static enum FormaDePago {
 		CREDITO, DEBITO, EFECTIVO
 	}; 
 	
-	enum Estado{
+	public static enum Estado{
 		PENDIENTE, EN_CURSO, FINALIZADO
 	}
 	
@@ -83,6 +83,12 @@ public class Pedido {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+	
+	public String[] toArray(){
+		String[] cadena = {this.getUsuario().getNombre()+" "+this.getUsuario().getApellido(), this.getFecha(), getEstado().toString()};
+		return cadena;
+	}
+	
 	
 	
 	

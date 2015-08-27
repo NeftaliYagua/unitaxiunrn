@@ -72,4 +72,14 @@ public class RadioTaxi {
 		return null;
 		
 	}
+
+	public List<Pedido> getPedidosPendientes() {
+		return pedidosPendientes;
+	}
+
+	public List<Taxi> getListaDeTaxis() {
+		return listaDeTaxis;
+	}
+	
+	
 }
