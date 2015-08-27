@@ -1,7 +1,7 @@
 package model;
 
 public class Taxi {
-	enum Estado{
+	public enum Estado{
 		LIBRE, OCUPADO
 	}
 	
@@ -74,6 +74,12 @@ public class Taxi {
 		this.notificacion = notificacion;
 	}
 	
+	
+	
+	public String[] toArray(){
+		String[] cadena = {this.getPatente(), this.getChofer(), this.getEmpresa(), getEstado().toString()};
+		return cadena;
+	}
 	
 	
 }
