@@ -13,6 +13,7 @@ import model.Taxi;
 import view.FactoriaDeVentanas;
 import view.PedidoView;
 import view.RadioTaxiView;
+import view.TaxiView;
 
 
 public class PedidosController {
@@ -65,6 +66,18 @@ public class PedidosController {
 		vista.setPedidosTable(modeloPedidos);		
 	}
 	
+	public void actualizarPedidos(){				
+		RadioTaxiView vista = FactoriaDeVentanas.getRadioTaxiInstance();
+		DefaultTableModel modeloPedidos = this.crearTableModelDePedidos((LinkedList<Pedido>) this.radioTaxi.getPedidosPendientes());
+		vista.setPedidosTable(modeloPedidos);			
+	}
+	
+	public void actualizarTaxis(){
+		RadioTaxiView vista = FactoriaDeVentanas.getRadioTaxiInstance();
+		DefaultTableModel modeloTaxis = this.crearTableModelDeTaxis((LinkedList<Taxi>) this.radioTaxi.getListaDeTaxis());
+		vista.setTaxisTable(modeloTaxis);
+	}
+	
 	public void crearVistaPedido(){					
 		PedidoView vista = FactoriaDeVentanas.getPedidoViewInstance();
 		//vista.limpiarVentana();		
@@ -97,6 +110,15 @@ public class PedidosController {
 			}
 		}
 		return modelo;
+	}
+	
+	public void gestionarPedido(){
+		Pedido p = radioTaxi.asignarTaxi();
+		this.actualizarPedidos();
+		this.actualizarTaxis();
+ 		TaxiView tView = new TaxiView(p);
+		tView.setVisible(true);
+		tView.setLocationRelativeTo(null);
 	}
 	
 }

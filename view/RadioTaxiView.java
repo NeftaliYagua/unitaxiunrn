@@ -1,14 +1,19 @@
 package view;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
+
+import controller.PedidosController;
 
 
 /**
@@ -29,6 +34,7 @@ public class RadioTaxiView extends javax.swing.JFrame {
 	private JTable taxisTable;
 	private JScrollPane jScrollPane1;
 	private JScrollPane jScrollPane2;
+	private JButton asignarTaxi;
 	private JTable pedidosTable;
 	private JLabel jLabel2;
 	private JLabel jLabel1;
@@ -123,6 +129,18 @@ public class RadioTaxiView extends javax.swing.JFrame {
 						taxisTable.setBounds(24, 335, 586, 88);
 						taxisTable.setPreferredSize(new java.awt.Dimension(580, 160));
 					}
+				}
+				{
+					asignarTaxi = new JButton();
+					jPanel1.add(asignarTaxi);
+					asignarTaxi.setText("Asignar un taxi");
+					asignarTaxi.setBounds(468, 283, 139, 32);
+					asignarTaxi.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							PedidosController ctrl = PedidosController.getInstance();
+							ctrl.gestionarPedido();							
+						}
+					});
 				}
 			}
 			pack();

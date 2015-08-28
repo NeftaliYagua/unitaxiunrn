@@ -43,12 +43,13 @@ public class RadioTaxi {
 	 * y luego le asigna el taxi que se obtuvo antes.
 	 *
 	 */	
-	public void asignarTaxi(){
+	public Pedido asignarTaxi(){
 		Taxi taxi = taxiLibre();
 		taxi.setEstado(Taxi.Estado.OCUPADO);
 		Pedido pedido = this.getPedidoPendiente();
 		pedido.setEstado(Pedido.Estado.EN_CURSO);
 		pedido.setTaxi(taxi);
+		return pedido;
 	}
 	
 	/**
