@@ -113,7 +113,10 @@ public class PedidosController {
 		vista.getTextFieldChofer().setText(p.getTaxi().getChofer());
 		vista.getTextFieldPatente().setText(p.getTaxi().getPatente());
 		vista.getTextFieldEmpresa().setText(p.getTaxi().getEmpresa());
-
+		vista.getLblUsuario().setText(vista.getLblUsuario().getText() + " " + p.getUsuario().getNombre() + " "
+				+ p.getUsuario().getApellido());
+		vista.getLblDni().setText(vista.getLblDni().getText() + " " + p.getUsuario().getDni());
+		
 		vista.setVisible(true);
 	}
 
