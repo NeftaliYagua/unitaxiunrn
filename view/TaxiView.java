@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.PedidosController;
 import model.Pedido;
 import model.Taxi;
+import model.Usuario;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -39,6 +40,7 @@ public class TaxiView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel nombreTaxi;
 	private Pedido pedido;
+	private DetallePedidoView detalle;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -58,9 +60,10 @@ public class TaxiView extends javax.swing.JFrame {
 		initGUI();
 	}
 
-	public TaxiView(Pedido pedido) {
+	public TaxiView(Pedido pedido,DetallePedidoView  detalle) {
 		super();
 		this.pedido = pedido;
+		this.detalle = detalle;
 		initGUI();
 	}
 
@@ -114,7 +117,9 @@ public class TaxiView extends javax.swing.JFrame {
 						public void actionPerformed(ActionEvent evt) {
 							TaxiView.this.pedido.getTaxi().setEstado(Taxi.Estado.LIBRE);
 							PedidosController.getInstance().actualizarTaxis();
-							botonLibre.setEnabled(true);
+							dispose();
+							detalle.dispose();
+							//botonLibre.setEnabled(true);
 
 						}
 					});
@@ -140,11 +145,10 @@ public class TaxiView extends javax.swing.JFrame {
 							String[] titulosCol = { "Notificaciones del taxita" };
 							DefaultTableModel modelo = new DefaultTableModel();
 							modelo.setColumnIdentifiers(titulosCol);
-							// for (Taxi t : listaTaxis) {
-							// modelo.addRow(t.toArray());
-							// }
-							PedidosController.getInstance().actualizarMensajes(msj.getText());
-							msj.setText("");
+							if (! "".equals(msj.getText())) {
+								detalle.setMensajesTable(msj.getText());
+								msj.setText("");
+							}							
 						}
 					});
 				}

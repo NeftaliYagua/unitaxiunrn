@@ -32,7 +32,7 @@ public class PedidosController {
 	public static void main(String[] args) {
 		// PedidoView pedidoView = new PedidoView();
 		// pedidoView.setVisible(true);
-		Taxi t = new Taxi("abc 123", "El rey", "Licenciado", "el 28 mil", Taxi.Estado.OCUPADO);
+		Taxi t = new Taxi("abc 123", "El rey", "Licenciado", "el 28 mil", Taxi.Estado.LIBRE);
 		Taxi t2 = new Taxi("yyy 321", "Roberrrrrrto", "Licena2", "el 28 mil", Taxi.Estado.LIBRE);
 		RadioTaxi radioTaxi = new RadioTaxi();
 		radioTaxi.addTaxi(t);
@@ -92,21 +92,13 @@ public class PedidosController {
 		actualizarTaxis();
 	}
 
-	public void actualizarMensajes(String mensaje) {
-		DetallePedidoView vista = FactoriaDeVentanas.getDetallePedidoViewInstance();
-
-		vista.setMensajesTable(mensaje);
-	}
-
 	public void crearVistaPedido() {
 		PedidoView vista = FactoriaDeVentanas.getPedidoViewInstance();
-		// vista.limpiarVentana();
-		// vista.actualizarVentana();
 		vista.setVisible(true);
 	}
 
-	public void crearVistaDetallePedido(Pedido p) {
-		DetallePedidoView vista = FactoriaDeVentanas.getDetallePedidoViewInstance();
+	public DetallePedidoView crearDetallePedido(Pedido p) {
+		DetallePedidoView vista = new DetallePedidoView();
 
 		vista.getTextFieldFechaYHora().setText(p.getFecha() + " " + p.getHora());
 		vista.getTextFieldEstado().setText(p.getEstado().name());
@@ -118,6 +110,7 @@ public class PedidosController {
 		vista.getLblDni().setText(vista.getLblDni().getText() + " " + p.getUsuario().getDni());
 		
 		vista.setVisible(true);
+		return vista;
 	}
 
 	public DefaultTableModel crearTableModelDeTaxis(LinkedList<Taxi> listaTaxis) {
@@ -154,10 +147,10 @@ public class PedidosController {
 			this.actualizarPedidos();
 			this.actualizarTaxis();
 
-			TaxiView tView = new TaxiView(p);
+			TaxiView tView = new TaxiView(p,this.crearDetallePedido(p));
 			tView.setVisible(true);
 			tView.setLocationRelativeTo(null);
-			crearVistaDetallePedido(p);
+			
 		} catch (Exception e) {
 			System.out.println("Mostrar mensaje: " + e.getMessage());
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Ocurrio un error", JOptionPane.WARNING_MESSAGE);

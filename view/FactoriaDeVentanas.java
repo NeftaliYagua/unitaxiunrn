@@ -4,8 +4,7 @@ package view;
 public class FactoriaDeVentanas {
 	
 	private static PedidoView pedidoView = null;
-	private static RadioTaxiView radioTaxi = null;
-	private static DetallePedidoView detallePedidoView=null;
+	private static RadioTaxiView radioTaxi = null;	
 	
 	public static PedidoView getPedidoViewInstance(){
 		if (pedidoView == null) {
@@ -23,15 +22,6 @@ public class FactoriaDeVentanas {
 		}else{
 			return radioTaxi;
 		}
-	}
-	
-	public static DetallePedidoView getDetallePedidoViewInstance(){
-		if (detallePedidoView == null) {
-			detallePedidoView = new DetallePedidoView();
-			return detallePedidoView;
-		}else{
-			return detallePedidoView;
-		}
-	}
+	}	
 
 }

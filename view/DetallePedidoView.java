@@ -15,6 +15,19 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class DetallePedidoView extends JFrame {
 
 	private JPanel jPanel1;
@@ -47,7 +60,7 @@ public class DetallePedidoView extends JFrame {
 	 * Create the frame.
 	 */
 	public DetallePedidoView() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 622, 441);
 		// contentPane = new JPanel();
 		// contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -95,10 +108,6 @@ public class DetallePedidoView extends JFrame {
 		lblDetalleDelPedido.setBounds(227, 11, 177, 34);
 		jPanel1.add(lblDetalleDelPedido);
 
-		JButton btnCerrar = new JButton("Cerrar");
-		btnCerrar.setBounds(240, 358, 122, 34);
-		jPanel1.add(btnCerrar);
-
 		textFieldFechaYHora = new JTextField();
 		textFieldFechaYHora.setEditable(false);
 		textFieldFechaYHora.setBounds(55, 137, 132, 20);
@@ -134,7 +143,7 @@ public class DetallePedidoView extends JFrame {
 		jPanel1.add(lblMensajes);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(55, 251, 495, 99);
+		scrollPane.setBounds(55, 251, 495, 131);
 		{
 			TableModel taxisTableModel = new DefaultTableModel(new String[][] { { "Sin mensajes..." } },
 					new String[] { "Notificación del taxista" });
@@ -154,13 +163,6 @@ public class DetallePedidoView extends JFrame {
 		lblDni = new JLabel("DNI:");
 		lblDni.setBounds(10, 31, 132, 14);
 		jPanel1.add(lblDni);
-		btnCerrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				// DetallePedidoView.this.setVisible(false);
-				// PedidosController.getInstance().crearVistaPedido();
-				DetallePedidoView.this.setVisible(false);
-			}
-		});
 	}
 
 	public void setMensajesTable(String m) {
