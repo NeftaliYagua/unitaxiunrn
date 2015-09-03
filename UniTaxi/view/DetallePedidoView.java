@@ -4,28 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-import controller.PedidosController;
-import model.Pedido;
-import model.Usuario;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 
 public class DetallePedidoView extends JFrame {
 
 	private JPanel jPanel1;
+	private JLabel lblUsuario;
+	private JLabel lblDni;
 	private JTextField textFieldFechaYHora;
 	private JTextField textFieldEstado;
 	private JTextField textFieldPatente;
@@ -152,6 +146,14 @@ public class DetallePedidoView extends JFrame {
 			tableMensajes.setPreferredSize(new java.awt.Dimension(580, 160));
 		}
 		jPanel1.add(scrollPane);
+
+		lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setBounds(10, 11, 132, 14);
+		jPanel1.add(lblUsuario);
+
+		lblDni = new JLabel("DNI:");
+		lblDni.setBounds(10, 31, 132, 14);
+		jPanel1.add(lblDni);
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				// DetallePedidoView.this.setVisible(false);
@@ -218,5 +220,22 @@ public class DetallePedidoView extends JFrame {
 	public void setTableMensajes(JTable tableMensajes) {
 		this.tableMensajes = tableMensajes;
 	}
+
+	public JLabel getLblUsuario() {
+		return lblUsuario;
+	}
+
+	public void setLblUsuario(JLabel lblUsuario) {
+		this.lblUsuario = lblUsuario;
+	}
+
+	public JLabel getLblDni() {
+		return lblDni;
+	}
+
+	public void setLblDni(JLabel lblDni) {
+		this.lblDni = lblDni;
+	}
+	
 
 }
