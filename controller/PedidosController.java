@@ -15,6 +15,7 @@ import view.RadioTaxiView;
 import view.TaxiView;
 
 public class PedidosController {
+	//Lauta gay
 	private RadioTaxi radioTaxi;
 	private static PedidosController ctrl = null;
 
