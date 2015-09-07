@@ -1,4 +1,4 @@
-package model;
+package ar.unrn.bd2.model;
 
 public class Pedido {
 	public static enum FormaDePago {

@@ -1,4 +1,4 @@
-package view;
+package ar.unrn.bd2.view;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -16,11 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import ar.unrn.bd2.model.Pedido;
+import ar.unrn.bd2.model.Usuario;
+
 import javax.swing.SwingUtilities;
 
 import controller.PedidosController;
-import model.Pedido;
-import model.Usuario;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -84,7 +86,7 @@ public class PedidoView extends javax.swing.JFrame {
 				jPanel1 = new PanelImagen("fondo.jpg");
 				setContentPane(jPanel1);
 
-				Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagenes/pedido.png"));
+				Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/pedido.png"));
 				setIconImage(icon);
 
 				// getContentPane().add(jPanel1, BorderLayout.CENTER);

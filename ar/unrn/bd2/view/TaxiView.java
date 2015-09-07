@@ -1,4 +1,4 @@
-package view;
+package ar.unrn.bd2.view;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -14,10 +14,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
+import ar.unrn.bd2.model.Pedido;
+import ar.unrn.bd2.model.Taxi;
+import ar.unrn.bd2.model.Usuario;
 import controller.PedidosController;
-import model.Pedido;
-import model.Taxi;
-import model.Usuario;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -73,7 +73,7 @@ public class TaxiView extends javax.swing.JFrame {
 			{
 				jPanel1 = new JPanel();
 
-				Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagenes/taxi.png"));
+				Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/taxi.png"));
 				setIconImage(icon);
 
 				getContentPane().add(jPanel1, BorderLayout.CENTER);

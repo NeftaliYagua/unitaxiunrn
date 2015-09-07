@@ -5,14 +5,14 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import model.Pedido;
-import model.RadioTaxi;
-import model.Taxi;
-import view.DetallePedidoView;
-import view.FactoriaDeVentanas;
-import view.PedidoView;
-import view.RadioTaxiView;
-import view.TaxiView;
+import ar.unrn.bd2.model.Pedido;
+import ar.unrn.bd2.model.RadioTaxi;
+import ar.unrn.bd2.model.Taxi;
+import ar.unrn.bd2.view.DetallePedidoView;
+import ar.unrn.bd2.view.FactoriaDeVentanas;
+import ar.unrn.bd2.view.PedidoView;
+import ar.unrn.bd2.view.RadioTaxiView;
+import ar.unrn.bd2.view.TaxiView;
 
 public class PedidosController {
 	private RadioTaxi radioTaxi;

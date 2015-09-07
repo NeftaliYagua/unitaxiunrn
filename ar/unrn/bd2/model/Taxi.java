@@ -1,4 +1,4 @@
-package model;
+package ar.unrn.bd2.model;
 
 public class Taxi {
 	public enum Estado{

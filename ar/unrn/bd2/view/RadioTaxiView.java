@@ -1,4 +1,4 @@
-package view;
+package ar.unrn.bd2.view;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -74,7 +74,7 @@ public class RadioTaxiView extends javax.swing.JFrame {
 				jPanel1 = new PanelImagen("fondo.jpg");
 				setContentPane(jPanel1);
 
-				Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagenes/icono.png"));
+				Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icono.png"));
 				setIconImage(icon);
 
 				// getContentPane().add(jPanel1, "Center");
