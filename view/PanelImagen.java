@@ -1,4 +1,4 @@
-package ar.unrn.bd2.view;
+package view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -1,4 +1,4 @@
-package ar.unrn.bd2.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

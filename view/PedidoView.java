@@ -1,4 +1,4 @@
-package ar.unrn.bd2.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import ar.unrn.bd2.model.Pedido;
-import ar.unrn.bd2.model.Usuario;
+import model.Pedido;
+import model.Usuario;
 
 import javax.swing.SwingUtilities;
 

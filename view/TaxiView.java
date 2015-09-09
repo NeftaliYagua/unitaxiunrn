@@ -1,4 +1,4 @@
-package ar.unrn.bd2.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -14,9 +14,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
-import ar.unrn.bd2.model.Pedido;
-import ar.unrn.bd2.model.Taxi;
-import ar.unrn.bd2.model.Usuario;
+import model.Pedido;
+import model.Taxi;
+import model.Usuario;
 import controller.PedidosController;
 
 /**

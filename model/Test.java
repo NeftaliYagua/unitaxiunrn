@@ -1,4 +1,4 @@
-package ar.unrn.bd2.model;
+package model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
