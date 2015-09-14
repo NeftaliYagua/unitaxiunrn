@@ -6,8 +6,6 @@ import java.util.List;
 import com.db4o.ObjectSet;
 import com.db4o.ext.ExtObjectContainer;
 
-import model.Usuario;
-
 public class DAOImpl<E> implements DAO<E> {
 	private static ExtObjectContainer db = DatabaseManager.getConnection();
 	private Class<E> clase;
