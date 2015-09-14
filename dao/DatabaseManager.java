@@ -1,6 +1,7 @@
 package dao;
 
 import com.db4o.Db4o;
+import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.ext.ExtObjectContainer;
 
@@ -16,7 +17,12 @@ public class DatabaseManager {
 		if (db != null) {
 			db.close();
 		}
-		ObjectContainer objectContainer = Db4o.openFile(DATABASE);
+
+		// ObjectContainer objectContainer = Db4o.openFile(DATABASE); //Esta
+		// deprecate!
+
+		ObjectContainer objectContainer = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), DATABASE);
+
 		db = objectContainer.ext();
 		return db;
 	}
