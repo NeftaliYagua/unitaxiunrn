@@ -6,10 +6,17 @@ import java.util.List;
 import com.db4o.ObjectSet;
 import com.db4o.ext.ExtObjectContainer;
 
+import model.Usuario;
+
 public class DAOImpl<E> implements DAO<E> {
 	private static ExtObjectContainer db = DatabaseManager.getConnection();
 	private Class<E> clase;
 	
+	public DAOImpl(Class<E> clase) {
+		// TODO Auto-generated constructor stub
+		this.clase = clase;
+	}
+
 	@Override
 	public boolean save(E object) {
 		// TODO Auto-generated method stub
