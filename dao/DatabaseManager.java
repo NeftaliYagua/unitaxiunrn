@@ -19,7 +19,7 @@ public class DatabaseManager {
 		}
 
 		// ObjectContainer objectContainer = Db4o.openFile(DATABASE); //Esta
-		// deprecate!
+		// deprecated!
 
 		ObjectContainer objectContainer = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), DATABASE);
 
