@@ -2,8 +2,9 @@ package api;
 
 import java.util.List;
 
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
+import com.db4o.ObjectContainer;
 
+import dao.DatabaseManager;
 import model.Pedido;
 import model.Pedido.FormaDePago;
 import model.Taxi;
@@ -16,9 +17,9 @@ import model.Usuario;
  * @author Lucas
  */
 public class Servicio {
-	private Util db4o;
+	private DatabaseManager db4o;
 
-	public Servicio(Util db4o) {
+	public Servicio(DatabaseManager db4o) {
 		this.db4o = db4o;
 
 	}
@@ -29,7 +30,7 @@ public class Servicio {
 	 */
 	public void pedirUnTaxi(double precio, String fecha, String hora, FormaDePago pago, Usuario usuario) {
 		// abro session/transaccion (si hace falta)
-		// ObjectContainer session = this.db4o.startSession();
+		ObjectContainer session = this.db4o.open();
 
 		// traigo instancias de la BD y delego en los objetos del modelo
 		// logica en el modelo, no en los daos o en este Servicio
@@ -40,7 +41,7 @@ public class Servicio {
 		// db4o.listResult(result);
 		// commit y close
 		// session.commit();
-		// session.close();
+		session.close();
 	}
 
 	/**
