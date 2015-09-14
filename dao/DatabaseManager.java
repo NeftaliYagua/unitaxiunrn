@@ -18,10 +18,10 @@ public class DatabaseManager {
 			db.close();
 		}
 
-		// ObjectContainer objectContainer = Db4o.openFile(DATABASE); //Esta
-		// deprecated!
+		 ObjectContainer objectContainer = Db4o.openFile(DATABASE); 
+		 //Esta deprecated! No obsoleto, lo podes usar de todas formas
 
-		ObjectContainer objectContainer = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), DATABASE);
+//		ObjectContainer objectContainer = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), DATABASE);
 
 		db = objectContainer.ext();
 		return db;
