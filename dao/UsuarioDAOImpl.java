@@ -17,7 +17,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public void delete(Usuario user) {
+	public void delete(Usuario usuario) {
 		// TODO Auto-generated method stub
 		
 	}
