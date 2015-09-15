@@ -1,25 +1,41 @@
 package dao;
 
+import java.util.List;
+
 import model.Usuario;
 
-public class UsuarioDAOImpl implements UsuarioDAO{
+public class UsuarioDAOImpl implements UsuarioDAO {
+	private static DAO<Usuario> dao = new DAOImpl<Usuario>(Usuario.class);
 
 	@Override
-	public void save(Usuario usuario) {
+	public void crearUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		
+		dao.save(usuario);
 	}
 
 	@Override
-	public Usuario get(long id) {
+	public Usuario actualizarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
+				
 		return null;
 	}
 
 	@Override
-	public void delete(Usuario usuario) {
+	public Usuario buscarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		
+		return dao.search(usuario);
+	}
+
+	@Override
+	public List<Usuario> listarUsuarios(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return dao.list();
+	}
+
+	@Override
+	public void borrarUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		dao.delete(usuario);
 	}
 
 }

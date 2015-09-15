@@ -7,5 +7,5 @@ public interface DAO<E> {
 	public abstract void delete(E object);
 	public abstract List<E> list();
 	public abstract E get(E object);
-	public abstract List<E> search(E object);
+	public abstract E search(E object);
 }

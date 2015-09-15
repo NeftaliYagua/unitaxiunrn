@@ -48,14 +48,14 @@ public class DAOImpl<E> implements DAO<E> {
 	}
 
 	@Override
-	public List<E> search(E object) {
+	public E search(E object) {
 		// TODO Auto-generated method stub
-		List<E> objects = new ArrayList<E>();
-		ObjectSet<E> result = db.queryByExample(object);
-		while(result.hasNext()){
-			objects.add((E)result.next());
-		}
-		return objects;
+//		List<E> objects = new ArrayList<E>();
+//		ObjectSet<E> result = db.queryByExample(object);
+//		while(result.hasNext()){
+//			objects.add((E)result.next());
+//		}
+		return null;
 	}
 
 }
