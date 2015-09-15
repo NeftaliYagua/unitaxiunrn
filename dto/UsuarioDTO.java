@@ -1,12 +1,14 @@
 package dto;
 
+import model.Usuario;
+
 public class UsuarioDTO {
 	private String nombre;
 	private String apellido;
 	private String dni;
 	private String mail;
 	private String telefono;
-	
+
 	public UsuarioDTO(String nombre, String apellido, String dni, String mail, String telefono) {
 		super();
 		this.nombre = nombre;
@@ -14,6 +16,15 @@ public class UsuarioDTO {
 		this.dni = dni;
 		this.mail = mail;
 		this.telefono = telefono;
+	}
+
+	public UsuarioDTO(Usuario usuario) {
+		super();
+		this.nombre = usuario.getNombre();
+		this.apellido = usuario.getApellido();
+		this.dni = usuario.getDni();
+		this.mail = usuario.getMail();
+		this.telefono = usuario.getTelefono();
 	}
 
 	public String getNombre() {
@@ -55,5 +66,5 @@ public class UsuarioDTO {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
-}	
+
+}

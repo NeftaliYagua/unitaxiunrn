@@ -6,8 +6,9 @@ import com.db4o.ObjectContainer;
 
 import dao.DatabaseManager;
 import dao.UsuarioDAO;
+import dto.PedidoDTO;
+import dto.UsuarioDTO;
 import model.Pedido;
-import model.Pedido.FormaDePago;
 import model.Taxi;
 import model.Usuario;
 
@@ -19,31 +20,38 @@ import model.Usuario;
  */
 public class Servicio {
 	private DatabaseManager db4o;
-	//se agrego a modo de ejemplo
+	// se agrego a modo de ejemplo
 	private UsuarioDAO usuarioDAO;
-	
+
 	public Servicio(DatabaseManager db4o) {
 		this.db4o = db4o;
 
 	}
 
-	public void crearUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
+	public void crearUsuario(UsuarioDTO usuarioDTO) { // Consultar
+														// UsuarioDTO-->Usuario
+
+		ObjectContainer session = this.db4o.open();
+
+		Usuario usuario = createUsuario(usuarioDTO);
+
 		usuarioDAO.crearUsuario(usuario);
+
+		session.close();
 	}
-	
+
 	/**
 	 * Metodo que recibe los parametros necesarios para realizar el pedido de un
 	 * taxi.
 	 */
-	public void pedirUnTaxi(double precio, String fecha, String hora, FormaDePago pago, Usuario usuario) {
+	public void pedirUnTaxi(PedidoDTO pedidoDTO, UsuarioDTO usuarioDTO) {
 		// abro session/transaccion (si hace falta)
 		ObjectContainer session = this.db4o.open();
 
 		// traigo instancias de la BD y delego en los objetos del modelo
 		// logica en el modelo, no en los daos o en este Servicio
 
-		Pedido pedido = new Pedido(precio, fecha, hora, pago, usuario);
+		// Pedido pedido = new Pedido(precio, fecha, hora, pago, usuario);
 		// new PedidoDao(session).guardar(pedido);
 
 		// db4o.listResult(result);
@@ -100,5 +108,10 @@ public class Servicio {
 		// session.close();
 
 		return null;
+	}
+
+	private Usuario createUsuario(UsuarioDTO usuarioDTO) {
+		return new Usuario(usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getDni(), usuarioDTO.getMail(),
+				usuarioDTO.getTelefono());
 	}
 }
