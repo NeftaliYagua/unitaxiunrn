@@ -16,7 +16,7 @@ public class DAOImpl<E> implements DAO<E> {
 	}
 
 	@Override
-	public boolean save(E object) {
+	public boolean guardar(E object) {
 		// TODO Auto-generated method stub
 		db.store(object);
 		db.commit();
@@ -24,14 +24,14 @@ public class DAOImpl<E> implements DAO<E> {
 	}
 
 	@Override
-	public void delete(E object) {
+	public void borrar(E object) {
 		// TODO Auto-generated method stub
 		db.delete(object);
 		db.commit();
 	}
 
 	@Override
-	public List<E> list() {
+	public List<E> listar() {
 		// TODO Auto-generated method stub
 		List<E> objects = new ArrayList<E>();
 		ObjectSet<E> result = db.queryByExample(clase);
@@ -42,13 +42,13 @@ public class DAOImpl<E> implements DAO<E> {
 	}
 
 	@Override
-	public E get(E object) {
+	public E obtener(E object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public E search(E object) {
+	public E buscar(E object) {
 		// TODO Auto-generated method stub
 //		List<E> objects = new ArrayList<E>();
 //		ObjectSet<E> result = db.queryByExample(object);
