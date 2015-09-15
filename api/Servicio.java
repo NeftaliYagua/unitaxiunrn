@@ -5,6 +5,7 @@ import java.util.List;
 import com.db4o.ObjectContainer;
 
 import dao.DatabaseManager;
+import dao.UsuarioDAO;
 import model.Pedido;
 import model.Pedido.FormaDePago;
 import model.Taxi;
@@ -18,12 +19,19 @@ import model.Usuario;
  */
 public class Servicio {
 	private DatabaseManager db4o;
-
+	//se agrego a modo de ejemplo
+	private UsuarioDAO usuarioDAO;
+	
 	public Servicio(DatabaseManager db4o) {
 		this.db4o = db4o;
 
 	}
 
+	public void crearUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		usuarioDAO.crearUsuario(usuario);
+	}
+	
 	/**
 	 * Metodo que recibe los parametros necesarios para realizar el pedido de un
 	 * taxi.
