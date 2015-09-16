@@ -88,6 +88,11 @@ public class Pedido {
 		String[] cadena = {this.getUsuario().getNombre()+" "+this.getUsuario().getApellido(), this.getFecha(), getEstado().toString()};
 		return cadena;
 	}
+
+	public Object getObjectId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
