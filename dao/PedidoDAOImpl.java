@@ -1,32 +1,48 @@
 package dao;
 
+import java.util.List;
+
+import com.db4o.ObjectContainer;
+import com.db4o.query.Predicate;
+
 import model.Pedido;
 
-public class PedidoDAOImpl implements PedidoDAO{
-	private static DAO<Pedido> dao = new DAOImpl<Pedido>(Pedido.class);
+public class PedidoDAOImpl implements PedidoDAO {
+	ObjectContainer db;
+
+	public PedidoDAOImpl(ObjectContainer session) {
+		db = session;
+	}
 
 	@Override
 	public void guardarPedido(Pedido pedido) {
 		// TODO Auto-generated method stub
-		dao.guardar(pedido);	
+		db.store(pedido);
 	}
 
 	@Override
-	public Pedido obtenerPedido(Pedido pedido) {
+	public Pedido getById(long id) {
 		// TODO Auto-generated method stub
-		return dao.obtener(pedido);
+		List<Pedido> result = db.query(new Predicate<Pedido>() {
+			@Override
+			public boolean match(Pedido pedido) {
+				return pedido.getObjectId().equals(id);
+			}
+			});
+		return result.get(0);
 	}
-
-	@Override
-	public Pedido actualizarPedido(Pedido pedido) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
 
 	@Override
 	public void borrarPedido(Pedido pedido) {
 		// TODO Auto-generated method stub
-		dao.borrar(pedido);
+		db.delete(pedido);
+	}
+
+	@Override
+	public List<Pedido> listarPedidos() {
+		// TODO Auto-generated method stub
+		List<Pedido> result = db.query(Pedido.class);
+		return result;
 	}
 
 }
