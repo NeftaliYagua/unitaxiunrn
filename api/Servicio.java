@@ -5,6 +5,8 @@ import java.util.List;
 import com.db4o.ObjectContainer;
 
 import dao.DatabaseManager;
+import dao.PedidoDAO;
+import dao.PedidoDAOImpl;
 import dao.UsuarioDAO;
 import dto.PedidoDTO;
 import dto.UsuarioDTO;
@@ -30,13 +32,34 @@ public class Servicio {
 
 	public void crearUsuario(UsuarioDTO usuarioDTO) { // Consultar
 														// UsuarioDTO-->Usuario
-
+		/*
+		 * ObjectContainer session = this.db4o.startSession();
+		 * 
+		 * ObjetoDelModelo o = new ObjetoDelModelo(descripcion, algunValor); new
+		 * ObjetoDelModeloDao(session).guarda(o);
+		 * 
+		 * //commit y close session.commit(); session.close();
+		 */
+		// abro session/transaccion (si hace falta)
 		ObjectContainer session = this.db4o.open();
 
+		// trabajo con el modelo y los daos
 		Usuario usuario = createUsuario(usuarioDTO);
 
 		usuarioDAO.crearUsuario(usuario);
 
+		session.close();
+	}
+
+	public void crearPedido(PedidoDTO pedidoDTO) {
+		ObjectContainer session = this.db4o.open();
+
+		Pedido pedido = new Pedido(pedidoDTO.getPrecio(), pedidoDTO.getFecha(), pedidoDTO.getHora(), null,
+				new Usuario());
+
+		new PedidoDAOImpl(session).guardarPedido(pedido);
+
+		session.commit();
 		session.close();
 	}
 
