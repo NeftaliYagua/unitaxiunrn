@@ -5,7 +5,6 @@ import java.util.List;
 import com.db4o.ObjectContainer;
 
 import dao.DatabaseManager;
-import dao.PedidoDAO;
 import dao.PedidoDAOImpl;
 import dao.UsuarioDAO;
 import dto.PedidoDTO;
@@ -30,8 +29,7 @@ public class Servicio {
 
 	}
 
-	public void crearUsuario(UsuarioDTO usuarioDTO) { // Consultar
-														// UsuarioDTO-->Usuario
+	public void crearUsuario(UsuarioDTO usuarioDTO) { 
 		/*
 		 * ObjectContainer session = this.db4o.startSession();
 		 * 
@@ -44,7 +42,7 @@ public class Servicio {
 		ObjectContainer session = this.db4o.open();
 
 		// trabajo con el modelo y los daos
-		Usuario usuario = createUsuario(usuarioDTO);
+		Usuario usuario = crearModeloUsuario(usuarioDTO);
 
 		usuarioDAO.crearUsuario(usuario);
 
@@ -133,7 +131,7 @@ public class Servicio {
 		return null;
 	}
 
-	private Usuario createUsuario(UsuarioDTO usuarioDTO) {
+	private Usuario crearModeloUsuario(UsuarioDTO usuarioDTO) {
 		return new Usuario(usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getDni(), usuarioDTO.getMail(),
 				usuarioDTO.getTelefono());
 	}
