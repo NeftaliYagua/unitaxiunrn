@@ -14,16 +14,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario actualizarUsuario(Usuario usuario) {
+	public Usuario obtenerUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-				
-		return null;
-	}
-
-	@Override
-	public Usuario buscarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return dao.buscar(usuario);
+		return dao.obtener(usuario);
 	}
 
 	@Override
