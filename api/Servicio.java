@@ -23,12 +23,9 @@ import model.Usuario;
  */
 public class Servicio {
 	private DatabaseManager db4o;
-	// se agrego a modo de ejemplo
 	private UsuarioDAO usuarioDAO;
 
 	public Servicio() {
-//		ExtObjectContainer db = this.db4o.open();
-//		ExtObjectContainer db = db4o.getConnection();
 	}
 	
 	public Servicio(DatabaseManager db4o) {
@@ -37,20 +34,9 @@ public class Servicio {
 	}
 	
 	public void crearUsuario(UsuarioDTO usuarioDTO) { 
-		/*
-		 * ObjectContainer session = this.db4o.startSession();
-		 * 
-		 * ObjetoDelModelo o = new ObjetoDelModelo(descripcion, algunValor); new
-		 * ObjetoDelModeloDao(session).guarda(o);
-		 * 
-		 * //commit y close session.commit(); session.close();
-		 */
-		// abro session/transaccion (si hace falta)
 		ObjectContainer session = this.db4o.open();
 		Usuario usuario = crearModeloUsuario(usuarioDTO);
-
 		new UsuarioDAOImpl(session).guardarUsuario(usuario);
-
 		session.commit();
 		session.close();
 	}
