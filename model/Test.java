@@ -3,6 +3,9 @@ package model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import api.Servicio;
+import dto.UsuarioDTO;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -38,16 +41,15 @@ public class Test {
 		
 		p.getTaxi().setEstado(Taxi.Estado.LIBRE);
 		
+		Servicio api = new Servicio();
 		
+		UsuarioDTO usuarioDTO = new UsuarioDTO("nombre", "apellido", "dni", "mail", "telefono");
 		
+		api.crearUsuario(usuarioDTO);
+				
 		//Notificacion n = new Notificacion("Llegando", 20);
 		
 		
-		
-		
-		
-		
-
 	}
 
 }

@@ -1,7 +1,7 @@
 package dao;
 
 import com.db4o.Db4o;
-import com.db4o.Db4oEmbedded;
+//import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.ext.ExtObjectContainer;
 

@@ -51,4 +51,8 @@ public class Usuario {
 		this.telefono = telefono;
 	}
 	
+	public Object getId(){
+		return 1;
+	}
+	
 }

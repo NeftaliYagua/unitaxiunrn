@@ -3,10 +3,12 @@ package api;
 import java.util.List;
 
 import com.db4o.ObjectContainer;
+import com.db4o.ext.ExtObjectContainer;
 
 import dao.DatabaseManager;
 import dao.PedidoDAOImpl;
 import dao.UsuarioDAO;
+import dao.UsuarioDAOImpl;
 import dto.PedidoDTO;
 import dto.UsuarioDTO;
 import model.Pedido;
@@ -24,11 +26,16 @@ public class Servicio {
 	// se agrego a modo de ejemplo
 	private UsuarioDAO usuarioDAO;
 
+	public Servicio() {
+//		ExtObjectContainer db = this.db4o.open();
+//		ExtObjectContainer db = db4o.getConnection();
+	}
+	
 	public Servicio(DatabaseManager db4o) {
 		this.db4o = db4o;
 
 	}
-
+	
 	public void crearUsuario(UsuarioDTO usuarioDTO) { 
 		/*
 		 * ObjectContainer session = this.db4o.startSession();
@@ -40,12 +47,11 @@ public class Servicio {
 		 */
 		// abro session/transaccion (si hace falta)
 		ObjectContainer session = this.db4o.open();
-
-		// trabajo con el modelo y los daos
 		Usuario usuario = crearModeloUsuario(usuarioDTO);
 
-		usuarioDAO.crearUsuario(usuario);
+		new UsuarioDAOImpl(session).guardarUsuario(usuario);
 
+		session.commit();
 		session.close();
 	}
 

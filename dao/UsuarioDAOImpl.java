@@ -2,33 +2,47 @@ package dao;
 
 import java.util.List;
 
+import com.db4o.ObjectContainer;
+import com.db4o.query.Predicate;
+
 import model.Usuario;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
-	private static DAO<Usuario> dao = new DAOImpl<Usuario>(Usuario.class);
+	ObjectContainer db;
 
-	@Override
-	public void crearUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		dao.guardar(usuario);
+	public UsuarioDAOImpl(ObjectContainer session) {
+		db = session;
 	}
 
 	@Override
-	public Usuario obtenerUsuario(Usuario usuario) {
+	public void guardarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		return dao.obtener(usuario);
+		db.store(usuario);
 	}
 
 	@Override
-	public List<Usuario> listarUsuarios(Usuario usuario) {
+	public Usuario getById(long id) {
 		// TODO Auto-generated method stub
-		return dao.listar();
+		List<Usuario> result = db.query(new Predicate<Usuario>() {
+			@Override
+			public boolean match(Usuario usuario) {
+				return usuario.getId().equals(id);
+			}
+			});
+		return result.get(0);
 	}
 
 	@Override
 	public void borrarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		dao.borrar(usuario);
+		db.delete(usuario);
+	}
+
+	@Override
+	public List<Usuario> listarUsuarios() {
+		// TODO Auto-generated method stub
+		List<Usuario> result = db.query(Usuario.class);
+		return result;
 	}
 
 }
