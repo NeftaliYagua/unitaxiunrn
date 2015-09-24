@@ -95,7 +95,7 @@ public class Taxi {
 	}
 
 	public String getId() {
-		return null;
+		return id;
 	}
 
 	public void setId(String id) {
