@@ -1,6 +1,7 @@
 package api;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,22 +87,24 @@ public class Servicio {
 		return new TaxiDTO(taxi);
 	}
 
-	public Usuario obtenerUsuario(UsuarioDTO usuarioDTO) {
+	public UsuarioDTO obtenerUsuario(UsuarioDTO usuarioDTO) {
 		ObjectContainer session = db.ext().openSession();
 
 		Usuario usuario = new UsuarioDAOImpl(session).getById(usuarioDTO.getId());
+		usuarioDTO = new UsuarioDTO(usuario);
 
 		session.close();
-		return usuario;
+		return usuarioDTO;
 	}
 
-	public Pedido obtenerPedido(PedidoDTO pedidoDTO) {
+	public PedidoDTO obtenerPedido(PedidoDTO pedidoDTO) {
 		ObjectContainer session = db.ext().openSession();
 
 		Pedido pedido = new PedidoDAOImpl(session).getById(pedidoDTO.getId());
+		pedidoDTO = new PedidoDTO(pedido);
 
 		session.close();
-		return pedido;
+		return pedidoDTO;
 	}
 
 	/**
@@ -120,22 +123,30 @@ public class Servicio {
 	 * 
 	 * }
 	 */
-	public List<Taxi> listarTaxis() {
+	public List<TaxiDTO> listarTaxis() {
 		ObjectContainer session = db.ext().openSession();
 
 		List<Taxi> taxis = new TaxiDAOImpl(session).listarTaxis();
 
+		List<TaxiDTO> taxiDTOs = new ArrayList<TaxiDTO>();
+		for (Taxi taxi : taxis) {
+			taxiDTOs.add(new TaxiDTO(taxi));
+		}
+
 		session.close();
-		return taxis;
+		return taxiDTOs;
 	}
 
-	public List<Taxi> listarTaxisLibres() {
+	public List<TaxiDTO> listarTaxisLibres() {
 		ObjectContainer session = db.ext().openSession();
 
 		List<Taxi> taxis = new TaxiDAOImpl(session).listarTaxisLibres();
-
+		List<TaxiDTO> taxiDTOs = new ArrayList<TaxiDTO>();
+		for (Taxi taxi : taxis) {
+			taxiDTOs.add(new TaxiDTO(taxi));
+		}
 		session.close();
-		return taxis;
+		return taxiDTOs;
 	}
 
 	public List<Pedido> listarPedidos() {
