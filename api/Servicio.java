@@ -121,11 +121,21 @@ public class Servicio {
 	 * }
 	 */
 	public List<Taxi> listarTaxis() {
-		return null;
+		ObjectContainer session = db.ext().openSession();
+
+		List<Taxi> taxis = new TaxiDAOImpl(session).listarTaxis();
+
+		session.close();
+		return taxis;
 	}
 
 	public List<Taxi> listarTaxisLibres() {
-		return null;
+		ObjectContainer session = db.ext().openSession();
+
+		List<Taxi> taxis = new TaxiDAOImpl(session).listarTaxisLibres();
+
+		session.close();
+		return taxis;
 
 	}
 
