@@ -2,7 +2,9 @@ package model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import api.Servicio;
 import dto.PedidoDTO;
@@ -48,7 +50,33 @@ public class Test {
 		Servicio api = new Servicio();
 		
 		UsuarioDTO usuarioDTO = new UsuarioDTO("Horacio", "Munoz", "12345678", "hmunoz@mail.com", "12345678");
+		
 		TaxiDTO taxiDTO = new TaxiDTO("abc 123", "Lopez", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO2 = new TaxiDTO("xyz 789", "Lopez", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO3 = new TaxiDTO("jda 378", "Lopez", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO4 = new TaxiDTO("abc 123", "Lucas", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO5 = new TaxiDTO("abc 123", "Lucas", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO6 = new TaxiDTO("djs 383", "Nicolas", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO7 = new TaxiDTO("dss 322", "Nicolas", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO8 = new TaxiDTO("wtx 003", "Lopez", "licencia", "Rapitaxi", false);
+		
+		api.crearTaxi(taxiDTO);
+		api.crearTaxi(taxiDTO2);
+		api.crearTaxi(taxiDTO3);
+		api.crearTaxi(taxiDTO4);
+		api.crearTaxi(taxiDTO5);
+		api.crearTaxi(taxiDTO6);
+		api.crearTaxi(taxiDTO7);
+		api.crearTaxi(taxiDTO8);
+		
+//		Set choferes = api.distinctNative();
+//		
+//		 for( Iterator it = choferes.iterator(); it.hasNext();) { 
+//			    Taxi x = (Taxi)it.next();
+//			    System.out.println(x.getChofer());
+//
+//		}
+		
 		PedidoDTO pedidoDTO = new PedidoDTO(2, "fecha", "hora", "TARJETA" , usuarioDTO, taxiDTO);
 		api.crearPedido(pedidoDTO);
 		

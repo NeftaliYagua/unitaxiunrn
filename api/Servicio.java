@@ -1,12 +1,16 @@
 package api;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
 import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.ext.ExtObjectContainer;
+import com.db4o.query.Predicate;
 
 import dao.DatabaseManager;
 import dao.PedidoDAOImpl;
@@ -33,12 +37,18 @@ public class Servicio {
 	
 	private static final String DATABASE_FILE = "database.db4o";
 	
-	EmbeddedConfiguration cfg;
+	ObjectContainer db;
 	
 	public Servicio() {
 		new File(DATABASE_FILE).delete();
-		cfg = Db4oEmbedded.newConfiguration();
-//        ObjectContainer container = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+//		cfg = Db4oEmbedded.newConfiguration();
+//        container = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+        
+        db = Db4oEmbedded.openFile(DATABASE_FILE);
+
+        // open the db4o-session. For example at the beginning for a web-request
+        
+
 	}
 	
 	public Servicio(DatabaseManager db4o) {
@@ -47,7 +57,8 @@ public class Servicio {
 	}
 	
 	public void crearUsuario(UsuarioDTO usuarioDTO) { 
-		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);		
+//		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
 		Usuario usuario = crearModeloUsuario(usuarioDTO);
 		new UsuarioDAOImpl(session).guardarUsuario(usuario);
 		session.commit();
@@ -55,15 +66,18 @@ public class Servicio {
 	}
 
 	public void crearPedido(PedidoDTO pedidoDTO) {
-		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
-		Pedido pedido = new Pedido(pedidoDTO.getPrecio(), pedidoDTO.getFecha(), pedidoDTO.getHora(), null, crearModeloUsuario(pedidoDTO.getUsuario()), crearModeloTaxi(pedidoDTO.getTaxi()) );
+//		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
+		
+		Pedido pedido = new Pedido(pedidoDTO.getPrecio(), pedidoDTO.getFecha(), pedidoDTO.getHora(), pedidoDTO.getPago(), crearModeloUsuario(pedidoDTO.getUsuario()), crearModeloTaxi(pedidoDTO.getTaxi()) );
 		new PedidoDAOImpl(session).guardarPedido(pedido);
 		session.commit();
 		session.close();
 	}
 	
 	public void crearTaxi(TaxiDTO taxiDTO) { 
-		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+//		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
 		Taxi taxi = new Taxi(taxiDTO.getPatente(), taxiDTO.getChofer(), taxiDTO.getLicencia(), taxiDTO.getEmpresa(), taxiDTO.getLibre());
 		new TaxiDAOImpl(session).guardarTaxi(taxi);
 		session.commit();
@@ -138,7 +152,19 @@ public class Servicio {
 		// session.commit();
 		// session.close();
 
+		
+		
 		return null;
+	}
+	
+	public Set distinctNative() {
+//		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
+		ObjectSet<Taxi> result = session.query(Taxi.class);
+		// will use the equals-method of TestClass.
+		Set<Taxi> distinctResult = new HashSet<Taxi>(result);
+		
+		return distinctResult;
 	}
 
 	private Usuario crearModeloUsuario(UsuarioDTO usuarioDTO) {
