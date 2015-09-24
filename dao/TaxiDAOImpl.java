@@ -28,7 +28,7 @@ public class TaxiDAOImpl implements TaxiDAO {
 			public boolean match(Taxi taxi) {
 				return taxi.getId().equals(id);
 			}
-			});
+		});
 		return result.get(0);
 	}
 
@@ -43,6 +43,16 @@ public class TaxiDAOImpl implements TaxiDAO {
 		// TODO Auto-generated method stub
 		List<Taxi> result = db.query(Taxi.class);
 		return result;
+	}
+
+	@Override
+	public List<Taxi> listarTaxisLibres() {
+		List<Taxi> taxis = db.query(new Predicate<Taxi>() {
+			public boolean match(Taxi taxi) {
+				return taxi.getLibre();
+			}
+		});
+		return taxis;
 	}
 
 }
