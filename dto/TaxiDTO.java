@@ -1,14 +1,17 @@
 package dto;
 
+import model.Taxi;
+
 public class TaxiDTO {
 
+	private String id;
 	private String patente;
 	private String chofer;
 	private String licencia;
 	private String empresa;
 	private boolean libre;
-	//private Notificacion notificacion;
-	
+	// private Notificacion notificacion;
+
 	public TaxiDTO(String patente, String chofer, String licencia, String empresa, boolean libre) {
 		super();
 		this.patente = patente;
@@ -16,9 +19,29 @@ public class TaxiDTO {
 		this.licencia = licencia;
 		this.empresa = empresa;
 		this.libre = libre;
-		//this.notificacion = new Notificacion();
+		// this.notificacion = new Notificacion();
 	}
-	
+
+	public TaxiDTO(String id, String patente, String chofer, String licencia, String empresa, boolean libre) {
+		super();
+		this.id = id;
+		this.patente = patente;
+		this.chofer = chofer;
+		this.licencia = licencia;
+		this.empresa = empresa;
+		this.libre = libre;
+	}
+
+	public TaxiDTO(Taxi taxi) {
+		super();
+		this.id = taxi.getId();
+		this.patente = taxi.getPatente();
+		this.chofer = taxi.getChofer();
+		this.licencia = taxi.getLicencia();
+		this.empresa = taxi.getEmpresa();
+		this.libre = taxi.getLibre();
+	}
+
 	public String getPatente() {
 		return patente;
 	}
@@ -59,7 +82,12 @@ public class TaxiDTO {
 		this.libre = libre;
 	}
 
+	public String getId() {
+		return id;
+	}
 
-	
-	
+	public void setId(String id) {
+		this.id = id;
+	}
+
 }

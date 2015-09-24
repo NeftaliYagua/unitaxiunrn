@@ -3,6 +3,8 @@ package dto;
 import model.Usuario;
 
 public class UsuarioDTO {
+
+	private String id;
 	private String nombre;
 	private String apellido;
 	private String dni;
@@ -18,8 +20,19 @@ public class UsuarioDTO {
 		this.telefono = telefono;
 	}
 
+	public UsuarioDTO(String id, String nombre, String apellido, String dni, String mail, String telefono) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.mail = mail;
+		this.telefono = telefono;
+	}
+
 	public UsuarioDTO(Usuario usuario) {
 		super();
+		this.id = usuario.getId();
 		this.nombre = usuario.getNombre();
 		this.apellido = usuario.getApellido();
 		this.dni = usuario.getDni();
@@ -65,6 +78,14 @@ public class UsuarioDTO {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }
