@@ -149,22 +149,30 @@ public class Servicio {
 		return taxiDTOs;
 	}
 
-	public List<Pedido> listarPedidos() {
+	public List<PedidoDTO> listarPedidos() {
 		ObjectContainer session = db.ext().openSession();
 
 		List<Pedido> pedidos = new PedidoDAOImpl(session).listarPedidos();
+		List<PedidoDTO> pedidoDTOs = new ArrayList<PedidoDTO>();
+		for (Pedido pedido : pedidos) {
+			pedidoDTOs.add(new PedidoDTO(pedido));
+		}
 
 		session.close();
-		return pedidos;
+		return pedidoDTOs;
 	}
 
-	public List<Pedido> listarPedidosPendientes() {
+	public List<PedidoDTO> listarPedidosPendientes() {
 		ObjectContainer session = db.ext().openSession();
 
 		List<Pedido> pedidos = new PedidoDAOImpl(session).listarPedidosPendientes();
+		List<PedidoDTO> pedidoDTOs = new ArrayList<PedidoDTO>();
+		for (Pedido pedido : pedidos) {
+			pedidoDTOs.add(new PedidoDTO(pedido));
+		}
 
 		session.close();
-		return pedidos;
+		return pedidoDTOs;
 	}
 
 	/**
