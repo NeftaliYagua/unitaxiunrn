@@ -1,19 +1,27 @@
 package model;
 
+import java.util.UUID;
+
 public class Taxi {
-//	public enum Estado{
-//		LIBRE, OCUPADO
-//	}
-	
+	// public enum Estado{
+	// LIBRE, OCUPADO
+	// }
+
+	private String id;
 	private String patente;
 	private String chofer;
 	private String licencia;
 	private String empresa;
 	private boolean libre;
 	private Notificacion notificacion;
-	
+
+	public Taxi() {
+		this.id = UUID.randomUUID().toString();
+	}
+
 	public Taxi(String patente, String chofer, String licencia, String empresa, boolean libre) {
 		super();
+		this.id = UUID.randomUUID().toString();
 		this.patente = patente;
 		this.chofer = chofer;
 		this.licencia = licencia;
@@ -22,8 +30,15 @@ public class Taxi {
 		this.notificacion = new Notificacion();
 	}
 
-	public Taxi() {
-		// TODO Auto-generated constructor stub
+	public Taxi(String id, String patente, String chofer, String licencia, String empresa, boolean libre) {
+		super();
+		this.id = id;
+		this.patente = patente;
+		this.chofer = chofer;
+		this.licencia = licencia;
+		this.empresa = empresa;
+		this.libre = libre;
+		this.notificacion = new Notificacion();
 	}
 
 	public String getPatente() {
@@ -49,7 +64,7 @@ public class Taxi {
 	public void setLicencia(String licencia) {
 		this.licencia = licencia;
 	}
-	
+
 	public String getEmpresa() {
 		return empresa;
 	}
@@ -73,14 +88,18 @@ public class Taxi {
 	public void setNotificacion(Notificacion notificacion) {
 		this.notificacion = notificacion;
 	}
-		
-	public String[] toArray(){
-		String[] cadena = {this.getPatente(), this.getChofer(), this.getEmpresa(), String.valueOf(this.getLibre())};
+
+	public String[] toArray() {
+		String[] cadena = { this.getPatente(), this.getChofer(), this.getEmpresa(), String.valueOf(this.getLibre()) };
 		return cadena;
 	}
-	
-	public Object getId(){
-		return null;		
+
+	public String getId() {
+		return null;
 	}
-	
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 }

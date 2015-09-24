@@ -1,14 +1,10 @@
 package model;
 
+import java.util.UUID;
+
 public class Pedido {
-//	public static enum FormaDePago {
-//		CREDITO, DEBITO, EFECTIVO
-//	}; 
-//	
-//	public static enum Estado{
-//		PENDIENTE, EN_CURSO, FINALIZADO
-//	}
-	
+
+	private String id;
 	private double precio;
 	private String fecha;
 	private String hora;
@@ -17,14 +13,32 @@ public class Pedido {
 	private Usuario usuario;
 	private Taxi taxi;
 
-	public Pedido(double precio, String fecha, String hora, String pago,
-			Usuario usuario, Taxi taxi) {
+	public Pedido() {
+		this.id = UUID.randomUUID().toString();
+	}
+
+	public Pedido(String id, double precio, String fecha, String hora, String pago, String estado, Usuario usuario,
+			Taxi taxi) {
 		super();
+		this.id = id;
 		this.precio = precio;
 		this.fecha = fecha;
 		this.hora = hora;
 		this.pago = pago;
-		this.estado  = "PENDIENTE";
+		this.estado = estado;
+		this.usuario = usuario;
+		this.taxi = taxi;
+	}
+
+	public Pedido(double precio, String fecha, String hora, String pago, Usuario usuario,
+			Taxi taxi) {
+		super();
+		this.id = UUID.randomUUID().toString();
+		this.precio = precio;
+		this.fecha = fecha;
+		this.hora = hora;
+		this.pago = pago;
+		this.estado = "PENDIENTE";
 		this.usuario = usuario;
 		this.taxi = taxi;
 	}
@@ -84,9 +98,10 @@ public class Pedido {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	
-	public String[] toArray(){
-		String[] cadena = {this.getUsuario().getNombre()+" "+this.getUsuario().getApellido(), this.getFecha(), getEstado().toString()};
+
+	public String[] toArray() {
+		String[] cadena = { this.getUsuario().getNombre() + " " + this.getUsuario().getApellido(), this.getFecha(),
+				getEstado().toString() };
 		return cadena;
 	}
 
@@ -94,12 +109,13 @@ public class Pedido {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 }
