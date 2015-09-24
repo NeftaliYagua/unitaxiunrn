@@ -136,15 +136,24 @@ public class Servicio {
 
 		session.close();
 		return taxis;
-
 	}
 
 	public List<Pedido> listarPedidos() {
-		return null;
+		ObjectContainer session = db.ext().openSession();
+
+		List<Pedido> pedidos = new PedidoDAOImpl(session).listarPedidos();
+
+		session.close();
+		return pedidos;
 	}
 
 	public List<Pedido> listarPedidosPendientes() {
-		return null;
+		ObjectContainer session = db.ext().openSession();
+
+		List<Pedido> pedidos = new PedidoDAOImpl(session).listarPedidosPendientes();
+
+		session.close();
+		return pedidos;
 	}
 
 	/**
