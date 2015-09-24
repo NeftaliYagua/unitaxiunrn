@@ -45,4 +45,14 @@ public class PedidoDAOImpl implements PedidoDAO {
 		return result;
 	}
 
+	@Override
+	public List<Pedido> listarPedidosPendientes() {
+		List<Pedido> pedidos = db.query(new Predicate<Pedido>() {
+			public boolean match(Pedido pedido) {
+				return pedido.getEstado().equals("PENDIENTE");
+			}
+		});
+		return pedidos;
+	}
+
 }
