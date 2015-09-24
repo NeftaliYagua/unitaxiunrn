@@ -52,7 +52,7 @@ public class Test {
 		TaxiDTO taxiDTO2 = new TaxiDTO("xyz 789", "Lopez", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO3 = new TaxiDTO("jda 378", "Lopez", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO4 = new TaxiDTO("abc 123", "Lucas", "licencia", "Rapitaxi", false);
-		TaxiDTO taxiDTO5 = new TaxiDTO("abc 123", "Lucas", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO5 = new TaxiDTO("osh 123", "Lucas", "licencia", "Rapitaxi", true);
 		TaxiDTO taxiDTO6 = new TaxiDTO("djs 383", "Nicolas", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO7 = new TaxiDTO("dss 322", "Nicolas", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO8 = new TaxiDTO("wtx 003", "Lopez", "licencia", "Rapitaxi", false);
@@ -82,6 +82,16 @@ public class Test {
 		System.out.println(api.obtenerPedido(pedidoDTO).getUsuario().getNombre());
 		System.out.println(api.obtenerPedido(pedidoDTO).getUsuario().getApellido());
 		System.out.println(api.obtenerPedido(pedidoDTO).getTaxi().getEmpresa());
+
+		// for (Taxi t : api.listarTaxis()) {
+		// System.out.println(t.getId());
+		// System.out.println(t.getPatente());
+		// }
+
+		for (Taxi t : api.listarTaxisLibres()) {
+			System.out.println(t.getId());
+			System.out.println(t.getPatente());
+		}
 	}
 
 }
