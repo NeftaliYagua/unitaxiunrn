@@ -21,14 +21,14 @@ public class PedidoDAOImpl implements PedidoDAO {
 	}
 
 	@Override
-	public Pedido getById(long id) {
+	public Pedido getById(String id) {
 		// TODO Auto-generated method stub
 		List<Pedido> result = db.query(new Predicate<Pedido>() {
 			@Override
 			public boolean match(Pedido pedido) {
-				return pedido.getObjectId().equals(id);
+				return pedido.getId().equals(id);
 			}
-			});
+		});
 		return result.get(0);
 	}
 

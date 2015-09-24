@@ -21,14 +21,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario getById(long id) {
+	public Usuario getById(String id) {
 		// TODO Auto-generated method stub
 		List<Usuario> result = db.query(new Predicate<Usuario>() {
 			@Override
 			public boolean match(Usuario usuario) {
 				return usuario.getId().equals(id);
 			}
-			});
+		});
 		return result.get(0);
 	}
 

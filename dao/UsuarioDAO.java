@@ -6,8 +6,11 @@ import model.Usuario;
 
 public interface UsuarioDAO {
 	public void guardarUsuario(Usuario usuario);
-	public Usuario getById(long id);
+
+	public Usuario getById(String id);
+
 	public List<Usuario> listarUsuarios();
+
 	public void borrarUsuario(Usuario usuario);
 
 }
