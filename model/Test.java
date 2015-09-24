@@ -88,7 +88,7 @@ public class Test {
 		// System.out.println(t.getPatente());
 		// }
 
-		for (Taxi t : api.listarTaxisLibres()) {
+		for (TaxiDTO t : api.listarTaxisLibres()) {
 			System.out.println(t.getId());
 			System.out.println(t.getPatente());
 		}
