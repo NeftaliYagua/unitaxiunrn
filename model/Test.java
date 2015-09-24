@@ -2,15 +2,19 @@ package model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import api.Servicio;
+import dto.PedidoDTO;
+import dto.TaxiDTO;
 import dto.UsuarioDTO;
 
 public class Test {
 
 	public static void main(String[] args) {
+
 		// TODO Auto-generated method stub
-		Date actual = new Date();
+/*		Date actual = new Date();
 		SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss");
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy"); 
 		
@@ -39,16 +43,14 @@ public class Test {
 		
 		p.setEstado(Pedido.Estado.FINALIZADO);
 		
-		p.getTaxi().setEstado(Taxi.Estado.LIBRE);
+		p.getTaxi().setEstado(Taxi.Estado.LIBRE);*/		
 		
 		Servicio api = new Servicio();
 		
-		UsuarioDTO usuarioDTO = new UsuarioDTO("nombre", "apellido", "dni", "mail", "telefono");
-		
-		api.crearUsuario(usuarioDTO);
-				
-		//Notificacion n = new Notificacion("Llegando", 20);
-		
+		UsuarioDTO usuarioDTO = new UsuarioDTO("Horacio", "Munoz", "12345678", "hmunoz@mail.com", "12345678");
+		TaxiDTO taxiDTO = new TaxiDTO("abc 123", "Lopez", "licencia", "Rapitaxi", false);
+		PedidoDTO pedidoDTO = new PedidoDTO(2, "fecha", "hora", "TARJETA" , usuarioDTO, taxiDTO);
+		api.crearPedido(pedidoDTO);
 		
 	}
 

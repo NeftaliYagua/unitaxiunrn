@@ -1,15 +1,20 @@
 package api;
 
+import java.io.File;
 import java.util.List;
 
+import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
+import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.ext.ExtObjectContainer;
 
 import dao.DatabaseManager;
 import dao.PedidoDAOImpl;
+import dao.TaxiDAOImpl;
 import dao.UsuarioDAO;
 import dao.UsuarioDAOImpl;
 import dto.PedidoDTO;
+import dto.TaxiDTO;
 import dto.UsuarioDTO;
 import model.Pedido;
 import model.Taxi;
@@ -19,13 +24,21 @@ import model.Usuario;
  * Clase que recibe los datos, desde la Vista, para crear los objetos del Modelo
  * y luego delega a los Daos la persistencia de estos.
  * 
- * @author Lucas
+ * @author Lucas?
  */
 public class Servicio {
+	
 	private DatabaseManager db4o;
 	private UsuarioDAO usuarioDAO;
-
+	
+	private static final String DATABASE_FILE = "database.db4o";
+	
+	EmbeddedConfiguration cfg;
+	
 	public Servicio() {
+		new File(DATABASE_FILE).delete();
+		cfg = Db4oEmbedded.newConfiguration();
+//        ObjectContainer container = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 	}
 	
 	public Servicio(DatabaseManager db4o) {
@@ -34,7 +47,7 @@ public class Servicio {
 	}
 	
 	public void crearUsuario(UsuarioDTO usuarioDTO) { 
-		ObjectContainer session = this.db4o.open();
+		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);		
 		Usuario usuario = crearModeloUsuario(usuarioDTO);
 		new UsuarioDAOImpl(session).guardarUsuario(usuario);
 		session.commit();
@@ -42,16 +55,21 @@ public class Servicio {
 	}
 
 	public void crearPedido(PedidoDTO pedidoDTO) {
-		ObjectContainer session = this.db4o.open();
-
-		Pedido pedido = new Pedido(pedidoDTO.getPrecio(), pedidoDTO.getFecha(), pedidoDTO.getHora(), null,
-				new Usuario());
-
+		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		Pedido pedido = new Pedido(pedidoDTO.getPrecio(), pedidoDTO.getFecha(), pedidoDTO.getHora(), null, crearModeloUsuario(pedidoDTO.getUsuario()), crearModeloTaxi(pedidoDTO.getTaxi()) );
 		new PedidoDAOImpl(session).guardarPedido(pedido);
-
 		session.commit();
 		session.close();
 	}
+	
+	public void crearTaxi(TaxiDTO taxiDTO) { 
+		ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		Taxi taxi = new Taxi(taxiDTO.getPatente(), taxiDTO.getChofer(), taxiDTO.getLicencia(), taxiDTO.getEmpresa(), taxiDTO.getLibre());
+		new TaxiDAOImpl(session).guardarTaxi(taxi);
+		session.commit();
+		session.close();
+	}
+
 
 	/**
 	 * Metodo que recibe los parametros necesarios para realizar el pedido de un
@@ -126,5 +144,9 @@ public class Servicio {
 	private Usuario crearModeloUsuario(UsuarioDTO usuarioDTO) {
 		return new Usuario(usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getDni(), usuarioDTO.getMail(),
 				usuarioDTO.getTelefono());
+	}
+	
+	private Taxi crearModeloTaxi(TaxiDTO taxiDTO) {
+		return new Taxi(taxiDTO.getPatente(),taxiDTO.getChofer(),taxiDTO.getLicencia(),taxiDTO.getEmpresa(), taxiDTO.getLibre());
 	}
 }

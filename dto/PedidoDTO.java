@@ -1,31 +1,32 @@
 package dto;
 
 public class PedidoDTO {
-	public static enum FormaDePago {
-		CREDITO, DEBITO, EFECTIVO
-	}; 
-	
-	public static enum Estado{
-		PENDIENTE, EN_CURSO, FINALIZADO
-	}
+//	public static enum FormaDePago {
+//		CREDITO, DEBITO, EFECTIVO
+//	}; 
+//	
+//	public static enum Estado{
+//		PENDIENTE, EN_CURSO, FINALIZADO
+//	}
 	
 	private double precio;
 	private String fecha;
 	private String hora;
-	private FormaDePago pago;
-	private Estado estado;
+	private String pago;
+	private String estado;
 	private UsuarioDTO usuario;
 	private TaxiDTO taxi;
 
-	public PedidoDTO(double precio, String fecha, String hora, FormaDePago pago,
-			UsuarioDTO usuario) {
+	public PedidoDTO(double precio, String fecha, String hora, String pago,
+			UsuarioDTO usuarioDTO, TaxiDTO taxiDTO) {
 		super();
 		this.precio = precio;
 		this.fecha = fecha;
 		this.hora = hora;
 		this.pago = pago;
-		this.usuario = usuario;
-		this.estado  = Estado.PENDIENTE;
+		this.estado  = "PENDIENTE";
+		this.usuario = usuarioDTO;
+		this.taxi = taxiDTO;
 	}
 
 	public double getPrecio() {
@@ -52,11 +53,11 @@ public class PedidoDTO {
 		this.hora = hora;
 	}
 
-	public FormaDePago getPago() {
+	public String getPago() {
 		return pago;
 	}
 
-	public void setPago(FormaDePago pago) {
+	public void setPago(String pago) {
 		this.pago = pago;
 	}
 
@@ -76,11 +77,11 @@ public class PedidoDTO {
 		this.taxi = taxi;
 	}
 
-	public Estado getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Estado estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 	

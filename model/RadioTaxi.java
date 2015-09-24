@@ -41,7 +41,7 @@ public class RadioTaxi {
 
 		if (hayPedidoPendiente()) {
 			pedido = this.getPedidoPendiente();
-			pedido.setEstado(Pedido.Estado.EN_CURSO);
+			pedido.setEstado("EN_CURSO");
 
 		} else {
 			throw new NullPointerException("No hay pedidos pendientes");
@@ -49,7 +49,7 @@ public class RadioTaxi {
 
 		if (hayTaxiLibre()) {
 			taxi = taxiLibre();
-			taxi.setEstado(Taxi.Estado.OCUPADO);
+			taxi.setLibre(false);
 			pedido.setTaxi(taxi);
 		} else {
 			throw new NullPointerException("No hay taxis libres");
@@ -69,7 +69,7 @@ public class RadioTaxi {
 
 		while (it.hasNext()) {
 			Taxi t = it.next();
-			if (t.getEstado() == Taxi.Estado.LIBRE) {
+			if (t.getLibre()) {
 				it.remove();
 				this.addTaxi(t);
 				return t;
@@ -83,7 +83,7 @@ public class RadioTaxi {
 	public boolean hayTaxiLibre() {
 
 		for (Taxi taxi : listaDeTaxis) {
-			if (taxi.getEstado() == Taxi.Estado.LIBRE)
+			if (taxi.getLibre())
 				return true;
 		}
 

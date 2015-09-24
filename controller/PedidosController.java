@@ -32,8 +32,8 @@ public class PedidosController {
 	public static void main(String[] args) {
 		// PedidoView pedidoView = new PedidoView();
 		// pedidoView.setVisible(true);
-		Taxi t = new Taxi("abc 123", "El rey", "Licenciado", "el 28 mil", Taxi.Estado.LIBRE);
-		Taxi t2 = new Taxi("yyy 321", "Roberrrrrrto", "Licena2", "el 28 mil", Taxi.Estado.LIBRE);
+		Taxi t = new Taxi("abc 123", "El rey", "Licenciado", "el 28 mil", true);
+		Taxi t2 = new Taxi("yyy 321", "Roberrrrrrto", "Licena2", "el 28 mil", true);
 		RadioTaxi radioTaxi = new RadioTaxi();
 		radioTaxi.addTaxi(t);
 		radioTaxi.addTaxi(t2);
@@ -101,7 +101,7 @@ public class PedidosController {
 		DetallePedidoView vista = new DetallePedidoView();
 
 		vista.getTextFieldFechaYHora().setText(p.getFecha() + " " + p.getHora());
-		vista.getTextFieldEstado().setText(p.getEstado().name());
+		vista.getTextFieldEstado().setText(p.getEstado());
 		vista.getTextFieldChofer().setText(p.getTaxi().getChofer());
 		vista.getTextFieldPatente().setText(p.getTaxi().getPatente());
 		vista.getTextFieldEmpresa().setText(p.getTaxi().getEmpresa());

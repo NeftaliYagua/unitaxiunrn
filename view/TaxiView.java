@@ -115,7 +115,7 @@ public class TaxiView extends javax.swing.JFrame {
 					cambiarEstado.setBounds(126, 85, 145, 35);
 					cambiarEstado.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							TaxiView.this.pedido.getTaxi().setEstado(Taxi.Estado.LIBRE);
+							TaxiView.this.pedido.getTaxi().setLibre(true);
 							PedidosController.getInstance().actualizarTaxis();
 							dispose();
 							detalle.dispose();

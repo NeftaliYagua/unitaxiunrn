@@ -147,7 +147,7 @@ public class PedidoView extends javax.swing.JFrame {
 							SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
 
 							Pedido p = new Pedido(100.0, formatoFecha.format(actual), formatoHora.format(actual),
-									Pedido.FormaDePago.EFECTIVO, u);
+									"EFECTIVO", u, null);
 							PedidosController ctrl = PedidosController.getInstance();
 							ctrl.actualizarPedidos(p);
 							limpiarVentana();
