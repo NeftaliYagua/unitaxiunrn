@@ -21,7 +21,7 @@ public class TaxiDAOImpl implements TaxiDAO {
 	}
 
 	@Override
-	public Taxi getById(long id) {
+	public Taxi getById(String id) {
 		// TODO Auto-generated method stub
 		List<Taxi> result = db.query(new Predicate<Taxi>() {
 			@Override
