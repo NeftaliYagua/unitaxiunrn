@@ -107,22 +107,36 @@ public class Servicio {
 		return pedidoDTO;
 	}
 
+	public TaxiDTO obtenerTaxi(TaxiDTO taxiDTO) {
+		ObjectContainer session = db.ext().openSession();
+
+		Taxi taxi = new TaxiDAOImpl(session).getById(taxiDTO.getId());
+		taxiDTO = new TaxiDTO(taxi);
+
+		session.close();
+		return taxiDTO;
+	}
+
 	/**
 	 * Metodo que recibe los parametros necesarios para asignar un taxi a un
 	 * pedido previamente realizado.
 	 */
-	/*
-	 * public void asignarUnTaxi(Pedido pedido, Taxi taxi) {
-	 * 
-	 * // obtengo el pedido de la bd // PedidoDAO pedidoDao= new
-	 * PedidoDAO(session); // pedidoDAO.get(pedido);
-	 * 
-	 * pedido.setTaxi(taxi);
-	 * 
-	 * // pedidoDAO.store(pedido)
-	 * 
-	 * }
-	 */
+
+	public PedidoDTO asignarUnTaxi(PedidoDTO pedidoDTO, TaxiDTO taxiDTO) {
+		ObjectContainer session = db.ext().openSession();
+
+		// obtengo el pedido de la bd
+		Pedido pedido = crearModeloPedido(obtenerPedido(pedidoDTO));
+		Taxi taxi = crearModeloTaxi(obtenerTaxi(taxiDTO));
+		pedido.setTaxi(taxi);
+
+		new PedidoDAOImpl(session).guardarPedido(pedido);
+
+		session.commit();
+		session.close();
+		return new PedidoDTO(pedido);
+	}
+
 	public List<TaxiDTO> listarTaxis() {
 		ObjectContainer session = db.ext().openSession();
 
