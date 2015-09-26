@@ -6,6 +6,7 @@ import com.db4o.ObjectContainer;
 import com.db4o.query.Predicate;
 
 import model.Pedido;
+import model.Taxi;
 
 public class PedidoDAOImpl implements PedidoDAO {
 	ObjectContainer db;
@@ -53,6 +54,26 @@ public class PedidoDAOImpl implements PedidoDAO {
 			}
 		});
 		return pedidos;
+	}
+
+	@Override
+	public List<Pedido> pedidosPorTaxi(Taxi taxi) {
+		List<Pedido> pedidos = db.query(new Predicate<Pedido>() {
+			public boolean match(Pedido pedido) {
+				return pedido.getTaxi().equals(taxi);
+			}
+		});
+		return pedidos;
+	}
+
+	@Override
+	public int cantPedidosPorTaxi(Taxi taxi) {
+		int numberOfObjects = db.query(new Predicate<Pedido>() {
+			public boolean match(Pedido pedido) {
+				return pedido.getTaxi().equals(taxi);
+			}
+		}).size();
+		return numberOfObjects;
 	}
 
 }
