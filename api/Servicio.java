@@ -22,10 +22,10 @@ import model.Taxi;
 import model.Usuario;
 
 /**
- * Clase que recibe los datos, desde la Vista, para crear los objetos del Modelo
- * y luego delega a los Daos la persistencia de estos.
+ * Clase que recibe los datos desde la Vista para crear los objetos del Modelo y
+ * luego delega a los Daos la persistencia de estos.
  * 
- * @author Lucas?
+ * @author Lucas
  */
 public class Servicio {
 
@@ -193,17 +193,26 @@ public class Servicio {
 	 * Metodo encargado de listar el top 1 de choferes. Es decir, el chofer que
 	 * mas viajes ha realizo.
 	 */
-	public String listarChoferConMasViajesRealizados(String nombre) {
-		// abro session/transaccion (si hace falta)
+	public String listarChoferConMasViajesRealizados() {
 		// ObjectContainer session = this.db4o.startSession();
+		ObjectContainer session = db.ext().openSession();
+
+		// Obtengo los taxis ya que cada chofer se corresponde con un unico taxi
+		List<Taxi> taxis = new TaxiDAOImpl(session).listarTaxis();
+
+		int max = 0;
+		Taxi taxi_max = new Taxi();
 		//
-		// return new UnDao(session).listarChoferes(nombre);
+		for (Taxi taxi : taxis) {
+			int cant = new PedidoDAOImpl(session).cantPedidosPorTaxi(taxi);
+			if (cant > max) {
+				max = cant;
+				taxi_max = taxi;
+			}
+		}
 
-		// commit y close
-		// session.commit();
-		// session.close();
-
-		return null;
+		session.close();
+		return taxi_max.getChofer();
 	}
 
 	public Set distinctNative() {
