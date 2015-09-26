@@ -49,13 +49,13 @@ public class Test {
 		UsuarioDTO usuarioDTO = new UsuarioDTO("Horacio", "Munoz", "12345678", "hmunoz@mail.com", "12345678");
 
 		TaxiDTO taxiDTO = new TaxiDTO("abc 123", "Lopez", "licencia", "Rapitaxi", false);
-		TaxiDTO taxiDTO2 = new TaxiDTO("xyz 789", "Lopez", "licencia", "Rapitaxi", false);
-		TaxiDTO taxiDTO3 = new TaxiDTO("jda 378", "Lopez", "licencia", "Rapitaxi", false);
-		TaxiDTO taxiDTO4 = new TaxiDTO("abc 123", "Lucas", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO2 = new TaxiDTO("xyz 789", "Pepito", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO3 = new TaxiDTO("jda 378", "Micho", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO4 = new TaxiDTO("abc 123", "Tito", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO5 = new TaxiDTO("osh 123", "Lucas", "licencia", "Rapitaxi", true);
-		TaxiDTO taxiDTO6 = new TaxiDTO("djs 383", "Nicolas", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO6 = new TaxiDTO("djs 383", "Gordo", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO7 = new TaxiDTO("dss 322", "Nicolas", "licencia", "Rapitaxi", false);
-		TaxiDTO taxiDTO8 = new TaxiDTO("wtx 003", "Lopez", "licencia", "Rapitaxi", false);
+		TaxiDTO taxiDTO8 = new TaxiDTO("wtx 003", "Cabezon", "licencia", "Rapitaxi", false);
 
 		taxiDTO = api.crearTaxi(taxiDTO);
 		taxiDTO2 = api.crearTaxi(taxiDTO2);
@@ -74,8 +74,14 @@ public class Test {
 		//
 		// }
 
-		PedidoDTO pedidoDTO = new PedidoDTO(2, "fecha", "hora", "TARJETA", usuarioDTO, taxiDTO);
+		PedidoDTO pedidoDTO = new PedidoDTO(2, "fecha", "hora", "EFECTIVO", usuarioDTO, taxiDTO);
 		pedidoDTO = api.crearPedido(pedidoDTO);
+
+		PedidoDTO pedidoDTO1 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, taxiDTO5);
+		pedidoDTO1 = api.crearPedido(pedidoDTO1);
+
+		PedidoDTO pedidoDTO2 = new PedidoDTO(20, "16-10-2015", "00:00", "CREDITO", usuarioDTO, taxiDTO5);
+		pedidoDTO2 = api.crearPedido(pedidoDTO2);
 
 		// recupero el pedido de la bd
 		System.out.println(api.obtenerPedido(pedidoDTO).getId());
@@ -92,6 +98,8 @@ public class Test {
 			System.out.println(t.getId());
 			System.out.println(t.getPatente());
 		}
+
+		System.out.println("El chofer con mas viajes realizados fue: " + api.listarChoferConMasViajesRealizados());
 	}
 
 }
