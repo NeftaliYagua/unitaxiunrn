@@ -102,4 +102,18 @@ public class Taxi {
 		this.id = id;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Taxi) {
+			Taxi tmpTaxi = (Taxi) obj;
+			if (this.getId().equals(tmpTaxi.getId())) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 }

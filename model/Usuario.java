@@ -84,4 +84,18 @@ public class Usuario {
 		this.id = id;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Usuario) {
+			Usuario tmpUsuario = (Usuario) obj;
+			if (this.getId().equals(tmpUsuario.getId())) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 }

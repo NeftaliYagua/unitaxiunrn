@@ -30,8 +30,7 @@ public class Pedido {
 		this.taxi = taxi;
 	}
 
-	public Pedido(double precio, String fecha, String hora, String pago, Usuario usuario,
-			Taxi taxi) {
+	public Pedido(double precio, String fecha, String hora, String pago, Usuario usuario, Taxi taxi) {
 		super();
 		this.id = UUID.randomUUID().toString();
 		this.precio = precio;
@@ -116,6 +115,20 @@ public class Pedido {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Pedido) {
+			Pedido tmpPedido = (Pedido) obj;
+			if (this.getId().equals(tmpPedido.getId())) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 }
