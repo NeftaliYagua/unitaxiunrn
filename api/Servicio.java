@@ -9,6 +9,8 @@ import java.util.Set;
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.config.EmbeddedConfiguration;
+import com.db4o.ta.TransparentPersistenceSupport;
 
 import dao.DatabaseManager;
 import dao.PedidoDAOImpl;
@@ -40,7 +42,12 @@ public class Servicio {
 		// cfg = Db4oEmbedded.newConfiguration();
 		// container = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 
-		db = Db4oEmbedded.openFile(DATABASE_FILE);
+		// db = Db4oEmbedded.openFile(DATABASE_FILE);
+
+		/* Testeandooooooo */
+		EmbeddedConfiguration config = Db4oEmbedded.newConfiguration();
+		config.common().add(new TransparentPersistenceSupport());
+		db = Db4oEmbedded.openFile(config, DATABASE_FILE);
 
 		// open the db4o-session. For example at the beginning for a web-request
 
@@ -73,6 +80,22 @@ public class Servicio {
 		session.commit();
 		session.close();
 		return new PedidoDTO(pedido);
+	}
+
+	public PedidoDTO actualizarPedido(PedidoDTO pedidoDTO) {// MIRARRRRRRRRR
+		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
+
+		Pedido pedido = crearModeloPedido(pedidoDTO);
+
+		Pedido p = new PedidoDAOImpl(session).getById(pedido.getId());
+		p.copiar(pedido);
+
+		new PedidoDAOImpl(session).guardarPedido(p);
+
+		session.commit();
+		session.close();
+		return new PedidoDTO(p);
 	}
 
 	public TaxiDTO crearTaxi(TaxiDTO taxiDTO) {
@@ -202,7 +225,7 @@ public class Servicio {
 
 		int max = 0;
 		Taxi taxi_max = new Taxi();
-		//
+
 		for (Taxi taxi : taxis) {
 			int cant = new PedidoDAOImpl(session).cantPedidosPorTaxi(taxi);
 			if (cant > max) {
