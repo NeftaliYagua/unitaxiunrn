@@ -2,7 +2,11 @@ package model;
 
 import java.util.UUID;
 
-public class Taxi {
+import com.db4o.activation.ActivationPurpose;
+import com.db4o.activation.Activator;
+import com.db4o.ta.Activatable;
+
+public class Taxi implements Activatable {
 	// public enum Estado{
 	// LIBRE, OCUPADO
 	// }
@@ -14,6 +18,7 @@ public class Taxi {
 	private String empresa;
 	private boolean libre;
 	private Notificacion notificacion;
+	private transient Activator _activator;
 
 	public Taxi() {
 		this.id = UUID.randomUUID().toString();
@@ -42,6 +47,7 @@ public class Taxi {
 	}
 
 	public String getPatente() {
+		activate(ActivationPurpose.READ);
 		return patente;
 	}
 
@@ -50,6 +56,7 @@ public class Taxi {
 	}
 
 	public String getChofer() {
+		activate(ActivationPurpose.READ);
 		return chofer;
 	}
 
@@ -58,6 +65,7 @@ public class Taxi {
 	}
 
 	public String getLicencia() {
+		activate(ActivationPurpose.READ);
 		return licencia;
 	}
 
@@ -66,6 +74,7 @@ public class Taxi {
 	}
 
 	public String getEmpresa() {
+		activate(ActivationPurpose.READ);
 		return empresa;
 	}
 
@@ -74,6 +83,7 @@ public class Taxi {
 	}
 
 	public boolean getLibre() {
+		activate(ActivationPurpose.READ);
 		return libre;
 	}
 
@@ -82,6 +92,7 @@ public class Taxi {
 	}
 
 	public Notificacion getNotificacion() {
+		activate(ActivationPurpose.READ);
 		return notificacion;
 	}
 
@@ -95,6 +106,7 @@ public class Taxi {
 	}
 
 	public String getId() {
+		activate(ActivationPurpose.READ);
 		return id;
 	}
 
@@ -114,6 +126,24 @@ public class Taxi {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public void activate(ActivationPurpose purpose) {
+		if (_activator != null) {
+			_activator.activate(purpose);
+		}
+	}
+
+	@Override
+	public void bind(Activator activator) {
+		if (_activator == activator) {
+			return;
+		}
+		if (activator != null && _activator != null) {
+			throw new IllegalStateException();
+		}
+		_activator = activator;
 	}
 
 }

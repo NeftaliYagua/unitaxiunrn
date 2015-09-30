@@ -2,7 +2,11 @@ package model;
 
 import java.util.UUID;
 
-public class Pedido {
+import com.db4o.activation.ActivationPurpose;
+import com.db4o.activation.Activator;
+import com.db4o.ta.Activatable;
+
+public class Pedido implements Activatable, Cloneable {
 
 	private String id;
 	private double precio;
@@ -12,6 +16,7 @@ public class Pedido {
 	private String estado;
 	private Usuario usuario;
 	private Taxi taxi;
+	private transient Activator _activator;
 
 	public Pedido() {
 		this.id = UUID.randomUUID().toString();
@@ -43,22 +48,27 @@ public class Pedido {
 	}
 
 	public double getPrecio() {
+		activate(ActivationPurpose.READ);
 		return precio;
 	}
 
 	public void setPrecio(double precio) {
+		activate(ActivationPurpose.READ);
 		this.precio = precio;
 	}
 
 	public String getFecha() {
+		activate(ActivationPurpose.READ);
 		return fecha;
 	}
 
 	public void setFecha(String fecha) {
+		activate(ActivationPurpose.WRITE);
 		this.fecha = fecha;
 	}
 
 	public String getHora() {
+		activate(ActivationPurpose.READ);
 		return hora;
 	}
 
@@ -67,6 +77,7 @@ public class Pedido {
 	}
 
 	public String getPago() {
+		activate(ActivationPurpose.READ);
 		return pago;
 	}
 
@@ -75,6 +86,7 @@ public class Pedido {
 	}
 
 	public Usuario getUsuario() {
+		activate(ActivationPurpose.READ);
 		return usuario;
 	}
 
@@ -83,6 +95,7 @@ public class Pedido {
 	}
 
 	public Taxi getTaxi() {
+		activate(ActivationPurpose.READ);
 		return taxi;
 	}
 
@@ -91,6 +104,7 @@ public class Pedido {
 	}
 
 	public String getEstado() {
+		activate(ActivationPurpose.READ);
 		return estado;
 	}
 
@@ -110,6 +124,7 @@ public class Pedido {
 	}
 
 	public String getId() {
+		activate(ActivationPurpose.READ);
 		return id;
 	}
 
@@ -130,5 +145,28 @@ public class Pedido {
 			return false;
 		}
 	}
+
+	@Override
+	public void activate(ActivationPurpose purpose) {
+		if (_activator != null) {
+			_activator.activate(purpose);
+		}
+	}
+
+	@Override
+	public void bind(Activator activator) {
+		if (_activator == activator) {
+			return;
+		}
+		if (activator != null && _activator != null) {
+			throw new IllegalStateException();
+		}
+		_activator = activator;
+	}
+
+	public void asignarTaxi(Taxi taxi) {
+		activate(ActivationPurpose.WRITE);
+		this.setTaxi(taxi);
+	}	
 
 }

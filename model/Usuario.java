@@ -2,13 +2,18 @@ package model;
 
 import java.util.UUID;
 
-public class Usuario {
+import com.db4o.activation.ActivationPurpose;
+import com.db4o.activation.Activator;
+import com.db4o.ta.Activatable;
+
+public class Usuario implements Activatable {
 	private String id;
 	private String nombre;
 	private String apellido;
 	private String dni;
 	private String mail;
 	private String telefono;
+	private transient Activator _activator;
 
 	public Usuario() {
 
@@ -37,6 +42,7 @@ public class Usuario {
 	}
 
 	public String getNombre() {
+		activate(ActivationPurpose.READ);
 		return nombre;
 	}
 
@@ -45,6 +51,7 @@ public class Usuario {
 	}
 
 	public String getApellido() {
+		activate(ActivationPurpose.READ);
 		return apellido;
 	}
 
@@ -53,6 +60,7 @@ public class Usuario {
 	}
 
 	public String getDni() {
+		activate(ActivationPurpose.READ);
 		return dni;
 	}
 
@@ -61,6 +69,7 @@ public class Usuario {
 	}
 
 	public String getMail() {
+		activate(ActivationPurpose.READ);
 		return mail;
 	}
 
@@ -69,6 +78,7 @@ public class Usuario {
 	}
 
 	public String getTelefono() {
+		activate(ActivationPurpose.READ);
 		return telefono;
 	}
 
@@ -77,6 +87,7 @@ public class Usuario {
 	}
 
 	public String getId() {
+		activate(ActivationPurpose.READ);
 		return id;
 	}
 
@@ -98,4 +109,21 @@ public class Usuario {
 		}
 	}
 
+	@Override
+	public void activate(ActivationPurpose purpose) {
+		if (_activator != null) {
+			_activator.activate(purpose);
+		}
+	}
+
+	@Override
+	public void bind(Activator activator) {
+		if (_activator == activator) {
+			return;
+		}
+		if (activator != null && _activator != null) {
+			throw new IllegalStateException();
+		}
+		_activator = activator;
+	}
 }
