@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Iterator;
+import java.util.ListIterator;
+
 import api.Servicio;
 import dto.PedidoDTO;
 import dto.TaxiDTO;
@@ -66,6 +69,9 @@ public class Test {
 		taxiDTO7 = api.crearTaxi(taxiDTO7);
 		taxiDTO8 = api.crearTaxi(taxiDTO8);
 
+		// TEST
+
+		taxiDTO5 = api.obtenerTaxi(taxiDTO5);
 		// Set choferes = api.distinctNative();
 		//
 		// for( Iterator it = choferes.iterator(); it.hasNext();) {
@@ -76,6 +82,10 @@ public class Test {
 
 		PedidoDTO pedidoDTO = new PedidoDTO(2, "fecha", "hora", "EFECTIVO", usuarioDTO, taxiDTO);
 		pedidoDTO = api.crearPedido(pedidoDTO);
+
+		// Testeo modificarlo
+		pedidoDTO.setFecha("Nueva fechaa");
+		api.actualizarPedido(pedidoDTO);
 
 		PedidoDTO pedidoDTO1 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, taxiDTO5);
 		pedidoDTO1 = api.crearPedido(pedidoDTO1);
@@ -100,6 +110,10 @@ public class Test {
 		}
 
 		System.out.println("El chofer con mas viajes realizados fue: " + api.listarChoferConMasViajesRealizados());
+		
+		api.contarChoferes();
+		
+//		System.out.println(api.distinctNative());
 	}
 
 }
