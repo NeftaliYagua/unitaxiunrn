@@ -2,13 +2,16 @@ package api;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
-import com.db4o.ObjectSet;
+import com.db4o.config.EmbeddedConfiguration;
+import com.db4o.ta.TransparentPersistenceSupport;
 
 import dao.DatabaseManager;
 import dao.PedidoDAOImpl;
@@ -40,7 +43,12 @@ public class Servicio {
 		// cfg = Db4oEmbedded.newConfiguration();
 		// container = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 
-		db = Db4oEmbedded.openFile(DATABASE_FILE);
+		// db = Db4oEmbedded.openFile(DATABASE_FILE);
+
+		/* Testeandooooooo */
+		EmbeddedConfiguration config = Db4oEmbedded.newConfiguration();
+		config.common().add(new TransparentPersistenceSupport());
+		db = Db4oEmbedded.openFile(config, DATABASE_FILE);
 
 		// open the db4o-session. For example at the beginning for a web-request
 
@@ -73,6 +81,22 @@ public class Servicio {
 		session.commit();
 		session.close();
 		return new PedidoDTO(pedido);
+	}
+
+	public PedidoDTO actualizarPedido(PedidoDTO pedidoDTO) {// MIRARRRRRRRRR
+		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
+
+		Pedido pedido = crearModeloPedido(pedidoDTO);
+
+		Pedido p = new PedidoDAOImpl(session).getById(pedido.getId());
+		p.copiar(pedido);
+
+		new PedidoDAOImpl(session).guardarPedido(p);
+
+		session.commit();
+		session.close();
+		return new PedidoDTO(p);
 	}
 
 	public TaxiDTO crearTaxi(TaxiDTO taxiDTO) {
@@ -202,7 +226,7 @@ public class Servicio {
 
 		int max = 0;
 		Taxi taxi_max = new Taxi();
-		//
+		// suponiendo que los taxis no se repiten
 		for (Taxi taxi : taxis) {
 			int cant = new PedidoDAOImpl(session).cantPedidosPorTaxi(taxi);
 			if (cant > max) {
@@ -215,14 +239,31 @@ public class Servicio {
 		return taxi_max.getChofer();
 	}
 
-	public Set distinctNative() {
-		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
-		ObjectContainer session = db.ext().openSession();
-		ObjectSet<Taxi> result = session.query(Taxi.class);
-		// will use the equals-method of TestClass.
-		Set<Taxi> distinctResult = new HashSet<Taxi>(result);
+	public void contarChoferes() {
 
-		return distinctResult;
+		List<String> choferes = new LinkedList<String>();
+		ObjectContainer session = db.ext().openSession();
+
+//		List<Pedido> result = session.query(new Predicate<Pedido>() {
+//			public boolean match(Pedido pedido) {
+//				return true;
+//			}
+//		});
+//		ListIterator<Pedido> it = result.listIterator();
+
+		//agrego todos los pedidos a una lista
+		ListIterator<Pedido> it = new PedidoDAOImpl(session).listarPedidos().listIterator();
+
+		//recorro la lista recuperando los choferes y los agrego a una nueva lista
+		while(it.hasNext())
+			choferes.add(it.next().getTaxi().getChofer());
+		
+		//cuento el numero de coincidencias en dicha lista
+		Map<String, Long> counted = choferes.stream().collect(Collectors.groupingBy(o -> o, Collectors.counting()));
+
+		System.out.println(counted);
+		
+		session.close();
 	}
 
 	/* De Dtos a Modelos */
@@ -253,4 +294,5 @@ public class Servicio {
 			return new Taxi(taxiDTO.getId(), taxiDTO.getPatente(), taxiDTO.getChofer(), taxiDTO.getLicencia(),
 					taxiDTO.getEmpresa(), taxiDTO.getLibre());
 	}
+
 }
