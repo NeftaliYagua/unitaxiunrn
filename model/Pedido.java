@@ -6,7 +6,7 @@ import com.db4o.activation.ActivationPurpose;
 import com.db4o.activation.Activator;
 import com.db4o.ta.Activatable;
 
-public class Pedido implements Activatable, Cloneable {
+public class Pedido implements Activatable {
 
 	private String id;
 	private double precio;
@@ -167,6 +167,16 @@ public class Pedido implements Activatable, Cloneable {
 	public void asignarTaxi(Taxi taxi) {
 		activate(ActivationPurpose.WRITE);
 		this.setTaxi(taxi);
-	}	
+	}
 
+	public void copiar(Pedido pedido) {
+		this.setId(pedido.getId());
+		this.setEstado(pedido.getEstado());
+		this.setFecha(pedido.getFecha());
+		this.setHora(pedido.getHora());
+		this.setPago(pedido.getPago());
+		this.setPrecio(pedido.getPrecio());
+		this.setTaxi(pedido.getTaxi());
+		this.setUsuario(pedido.getUsuario());
+	}
 }
