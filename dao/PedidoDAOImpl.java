@@ -42,7 +42,11 @@ public class PedidoDAOImpl implements PedidoDAO {
 	@Override
 	public List<Pedido> listarPedidos() {
 		// TODO Auto-generated method stub
-		List<Pedido> result = db.query(Pedido.class);
+		List<Pedido> result = db.query(new Predicate<Pedido>() {
+			public boolean match(Pedido pedido) {
+				return true;
+			}
+		});
 		return result;
 	}
 

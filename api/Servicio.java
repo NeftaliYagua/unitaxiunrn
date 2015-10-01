@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
+
+import com.db4o.ObjectSet;
 import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.ta.TransparentPersistenceSupport;
 
@@ -226,7 +228,10 @@ public class Servicio {
 
 		int max = 0;
 		Taxi taxi_max = new Taxi();
+
 		// suponiendo que los taxis no se repiten
+
+
 		for (Taxi taxi : taxis) {
 			int cant = new PedidoDAOImpl(session).cantPedidosPorTaxi(taxi);
 			if (cant > max) {

@@ -87,6 +87,10 @@ public class Test {
 		pedidoDTO.setFecha("Nueva fechaa");
 		api.actualizarPedido(pedidoDTO);
 
+		// Testeo modificarlo
+		pedidoDTO.setFecha("Nueva fechaa");
+		api.actualizarPedido(pedidoDTO);
+
 		PedidoDTO pedidoDTO1 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, taxiDTO5);
 		pedidoDTO1 = api.crearPedido(pedidoDTO1);
 
