@@ -59,6 +59,8 @@ public class Servicio {
 
 	}
 
+	/* ---------------- Metodos de creación ---------------- */
+
 	public UsuarioDTO crearUsuario(UsuarioDTO usuarioDTO) {
 		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 		ObjectContainer session = db.ext().openSession();
@@ -88,6 +90,20 @@ public class Servicio {
 		return new PedidoDTO(pedido);
 	}
 
+	public TaxiDTO crearTaxi(TaxiDTO taxiDTO) {
+		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
+
+		Taxi taxi = crearModeloTaxi(taxiDTO);
+		new TaxiDAOImpl(session).guardarTaxi(taxi);
+
+		session.commit();
+		session.close();
+		return new TaxiDTO(taxi);
+	}
+
+	/* ---------------- Metodos de actualización ---------------- */
+
 	public PedidoDTO actualizarPedido(PedidoDTO pedidoDTO) {
 		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 		ObjectContainer session = db.ext().openSession();
@@ -103,24 +119,62 @@ public class Servicio {
 		p.setPago(pedido.getPago());
 		p.setPrecio(pedido.getPrecio());
 
-		new PedidoDAOImpl(session).guardarPedido(p);
+		// Ya no hace falta con la persistencia transaparente
+		// new PedidoDAOImpl(session).guardarPedido(p);
 
 		session.commit();
 		session.close();
 		return new PedidoDTO(p);
 	}
 
-	public TaxiDTO crearTaxi(TaxiDTO taxiDTO) {
+	public TaxiDTO actualizarTaxi(TaxiDTO taxiDTO) {
 		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 		ObjectContainer session = db.ext().openSession();
 
 		Taxi taxi = crearModeloTaxi(taxiDTO);
-		new TaxiDAOImpl(session).guardarTaxi(taxi);
+
+		Taxi t = new TaxiDAOImpl(session).getById(taxi.getId());
+
+		// Actualizo los campos
+		t.setChofer(taxi.getChofer());
+		t.setEmpresa(taxi.getEmpresa());
+		t.setLibre(taxi.getLibre());
+		t.setLicencia(taxi.getLicencia());
+		t.setNotificacion(taxi.getNotificacion());
+		t.setPatente(taxi.getPatente());
+
+		// Ya no hace falta con la persistencia transaparente
+		// new TaxiDAOImpl(session).guardarTaxi(t);
 
 		session.commit();
 		session.close();
-		return new TaxiDTO(taxi);
+		return new TaxiDTO(t);
 	}
+
+	public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO) {
+		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
+		ObjectContainer session = db.ext().openSession();
+
+		Usuario usuario = crearModeloUsuario(usuarioDTO);
+
+		Usuario u = new UsuarioDAOImpl(session).getById(usuario.getId());
+
+		// Actualizo los campos
+		u.setApellido(usuario.getApellido());
+		u.setDni(usuario.getDni());
+		u.setMail(usuario.getMail());
+		u.setNombre(usuario.getNombre());
+		u.setTelefono(usuario.getTelefono());
+
+		// Ya no hace falta con la persistencia transaparente
+		// new TaxiDAOImpl(session).guardarTaxi(t);
+
+		session.commit();
+		session.close();
+		return new UsuarioDTO(u);
+	}
+
+	/* ---------------- Metodos de obtención ---------------- */
 
 	public UsuarioDTO obtenerUsuario(UsuarioDTO usuarioDTO) {
 		ObjectContainer session = db.ext().openSession();
@@ -171,6 +225,8 @@ public class Servicio {
 		session.close();
 		return new PedidoDTO(pedido);
 	}
+
+	/* ---------------- Metodos de listados ---------------- */
 
 	public List<TaxiDTO> listarTaxis() {
 		ObjectContainer session = db.ext().openSession();
@@ -284,7 +340,11 @@ public class Servicio {
 		session.close();
 	}
 
-	/* De Dtos a Modelos */
+	/*
+	 * ---------------- Metodos que convierten de Dtos a Modelos
+	 * ----------------
+	 */
+
 	private Usuario crearModeloUsuario(UsuarioDTO usuarioDTO) {
 		if (usuarioDTO.getId() == null)
 			return new Usuario(usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getDni(),
