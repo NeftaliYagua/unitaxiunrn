@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
-
-import com.db4o.ObjectSet;
 import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.ta.TransparentPersistenceSupport;
 
@@ -78,6 +76,11 @@ public class Servicio {
 		ObjectContainer session = db.ext().openSession();
 
 		Pedido pedido = crearModeloPedido(pedidoDTO);
+
+		// Recupero el usuario de la bd
+		if (pedido.getUsuario().getId() != null)
+			pedido.setUsuario(new UsuarioDAOImpl(session).getById(pedido.getUsuario().getId()));
+
 		new PedidoDAOImpl(session).guardarPedido(pedido);
 
 		session.commit();
@@ -92,7 +95,28 @@ public class Servicio {
 		Pedido pedido = crearModeloPedido(pedidoDTO);
 
 		Pedido p = new PedidoDAOImpl(session).getById(pedido.getId());
-		p.copiar(pedido);
+
+		// if (pedidoDTO.getTaxi().getId() != null)
+		// if (pedidoDTO.getTaxi().equals(p.getTaxi())) {
+		// Taxi t = new
+		// TaxiDAOImpl(session).getById(pedidoDTO.getTaxi().getId());
+		// pedido.setTaxi(t);
+		// }
+		// if (pedidoDTO.getUsuario().getId() != null)
+		// if (pedidoDTO.getUsuario().equals(p.getUsuario()))
+		// pedido.setUsuario(new
+		// UsuarioDAOImpl(session).getById(pedidoDTO.getUsuario().getId()));
+
+		p.setEstado(pedido.getEstado());
+		p.setFecha(pedido.getFecha());
+		p.setHora(pedido.getHora());
+		p.setPago(pedido.getPago());
+		p.setPrecio(pedido.getPrecio());
+		// p.setTaxi((pedido.getTaxi().getId() == null) ? null
+		// : new TaxiDAOImpl(session).getById(pedidoDTO.getTaxi().getId()));
+		// p.setUsuario((pedido.getUsuario().getId() == null) ? null
+		// : new
+		// UsuarioDAOImpl(session).getById(pedidoDTO.getUsuario().getId()));
 
 		new PedidoDAOImpl(session).guardarPedido(p);
 
@@ -152,8 +176,8 @@ public class Servicio {
 		ObjectContainer session = db.ext().openSession();
 
 		// obtengo el pedido de la bd
-		Pedido pedido = crearModeloPedido(obtenerPedido(pedidoDTO));
-		Taxi taxi = crearModeloTaxi(obtenerTaxi(taxiDTO));
+		Pedido pedido = new PedidoDAOImpl(session).getById(pedidoDTO.getId());
+		Taxi taxi = new TaxiDAOImpl(session).getById(taxiDTO.getId());
 		pedido.setTaxi(taxi);
 
 		new PedidoDAOImpl(session).guardarPedido(pedido);
@@ -231,7 +255,6 @@ public class Servicio {
 
 		// suponiendo que los taxis no se repiten
 
-
 		for (Taxi taxi : taxis) {
 			int cant = new PedidoDAOImpl(session).cantPedidosPorTaxi(taxi);
 			if (cant > max) {
@@ -249,31 +272,36 @@ public class Servicio {
 		List<String> choferes = new LinkedList<String>();
 		ObjectContainer session = db.ext().openSession();
 
-//		List<Pedido> result = session.query(new Predicate<Pedido>() {
-//			public boolean match(Pedido pedido) {
-//				return true;
-//			}
-//		});
-//		ListIterator<Pedido> it = result.listIterator();
+		// List<Pedido> result = session.query(new Predicate<Pedido>() {
+		// public boolean match(Pedido pedido) {
+		// return true;
+		// }
+		// });
+		// ListIterator<Pedido> it = result.listIterator();
 
-		//agrego todos los pedidos a una lista
+		// agrego todos los pedidos a una lista
 		ListIterator<Pedido> it = new PedidoDAOImpl(session).listarPedidos().listIterator();
 
-		//recorro la lista recuperando los choferes y los agrego a una nueva lista
-		while(it.hasNext())
-			choferes.add(it.next().getTaxi().getChofer());
-		
-		//cuento el numero de coincidencias en dicha lista
+		// recorro la lista recuperando los choferes y los agrego a una nueva
+		// lista
+		while (it.hasNext())
+			try {
+				choferes.add(it.next().getTaxi().getChofer());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+		// cuento el numero de coincidencias en dicha lista
 		Map<String, Long> counted = choferes.stream().collect(Collectors.groupingBy(o -> o, Collectors.counting()));
 
 		System.out.println(counted);
-		
+
 		session.close();
 	}
 
 	/* De Dtos a Modelos */
 	private Usuario crearModeloUsuario(UsuarioDTO usuarioDTO) {
-		if (usuarioDTO == null)
+		if (usuarioDTO.getId() == null)
 			return new Usuario(usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getDni(),
 					usuarioDTO.getMail(), usuarioDTO.getTelefono());
 		else
@@ -284,11 +312,13 @@ public class Servicio {
 	private Pedido crearModeloPedido(PedidoDTO pedidoDTO) {
 		if (pedidoDTO.getId() == null)
 			return new Pedido(pedidoDTO.getPrecio(), pedidoDTO.getFecha(), pedidoDTO.getHora(), pedidoDTO.getPago(),
-					crearModeloUsuario(pedidoDTO.getUsuario()), crearModeloTaxi(pedidoDTO.getTaxi()));
+					(pedidoDTO.getUsuario() == null) ? null : crearModeloUsuario(pedidoDTO.getUsuario()),
+					(pedidoDTO.getTaxi() == null) ? null : crearModeloTaxi(pedidoDTO.getTaxi()));
 		else
 			return new Pedido(pedidoDTO.getId(), pedidoDTO.getPrecio(), pedidoDTO.getFecha(), pedidoDTO.getHora(),
-					pedidoDTO.getPago(), pedidoDTO.getEstado(), crearModeloUsuario(pedidoDTO.getUsuario()),
-					crearModeloTaxi(pedidoDTO.getTaxi()));
+					pedidoDTO.getPago(), pedidoDTO.getEstado(),
+					(pedidoDTO.getUsuario() == null) ? null : crearModeloUsuario(pedidoDTO.getUsuario()),
+					(pedidoDTO.getTaxi() == null) ? null : crearModeloTaxi(pedidoDTO.getTaxi()));
 	}
 
 	private Taxi crearModeloTaxi(TaxiDTO taxiDTO) {
