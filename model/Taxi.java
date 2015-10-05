@@ -52,6 +52,7 @@ public class Taxi implements Activatable {
 	}
 
 	public void setPatente(String patente) {
+		activate(ActivationPurpose.WRITE);
 		this.patente = patente;
 	}
 
@@ -61,6 +62,7 @@ public class Taxi implements Activatable {
 	}
 
 	public void setChofer(String chofer) {
+		activate(ActivationPurpose.WRITE);
 		this.chofer = chofer;
 	}
 
@@ -70,6 +72,7 @@ public class Taxi implements Activatable {
 	}
 
 	public void setLicencia(String licencia) {
+		activate(ActivationPurpose.WRITE);
 		this.licencia = licencia;
 	}
 
@@ -79,6 +82,7 @@ public class Taxi implements Activatable {
 	}
 
 	public void setEmpresa(String empresa) {
+		activate(ActivationPurpose.WRITE);
 		this.empresa = empresa;
 	}
 
@@ -88,6 +92,7 @@ public class Taxi implements Activatable {
 	}
 
 	public void setLibre(boolean libre) {
+		activate(ActivationPurpose.WRITE);
 		this.libre = libre;
 	}
 
@@ -97,6 +102,7 @@ public class Taxi implements Activatable {
 	}
 
 	public void setNotificacion(Notificacion notificacion) {
+		activate(ActivationPurpose.WRITE);
 		this.notificacion = notificacion;
 	}
 
@@ -111,6 +117,7 @@ public class Taxi implements Activatable {
 	}
 
 	public void setId(String id) {
+		activate(ActivationPurpose.WRITE);
 		this.id = id;
 	}
 

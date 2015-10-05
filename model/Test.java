@@ -48,6 +48,10 @@ public class Test {
 
 		UsuarioDTO usuarioDTO = new UsuarioDTO("Horacio", "Munoz", "12345678", "hmunoz@mail.com", "12345678");
 		usuarioDTO = api.crearUsuario(usuarioDTO);
+		// Test modificar usuario
+		usuarioDTO.setNombre("Lucas");
+		usuarioDTO.setApellido("Difabio");
+		usuarioDTO = api.actualizarUsuario(usuarioDTO);
 
 		TaxiDTO taxiDTO = new TaxiDTO("abc 123", "Lopez", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO2 = new TaxiDTO("xyz 789", "Pepito", "licencia", "Rapitaxi", false);
@@ -59,6 +63,10 @@ public class Test {
 		TaxiDTO taxiDTO8 = new TaxiDTO("wtx 003", "Cabezon", "licencia", "Rapitaxi", false);
 
 		taxiDTO = api.crearTaxi(taxiDTO);
+		// Test modificar taxi
+		taxiDTO.setChofer("Otro chofer");
+		taxiDTO = api.actualizarTaxi(taxiDTO);
+
 		taxiDTO2 = api.crearTaxi(taxiDTO2);
 		taxiDTO3 = api.crearTaxi(taxiDTO3);
 		taxiDTO4 = api.crearTaxi(taxiDTO4);
@@ -84,7 +92,7 @@ public class Test {
 		// Testeo modificarlo
 		pedidoDTO.setFecha("Nueva fechaa");
 		pedidoDTO = api.actualizarPedido(pedidoDTO);
-		//Le asigno un taxi
+		// Le asigno un taxi
 		pedidoDTO = api.asignarUnTaxi(pedidoDTO, taxiDTO5);
 
 		PedidoDTO pedidoDTO1 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, null);
@@ -101,11 +109,6 @@ public class Test {
 		System.out.println(api.obtenerPedido(pedidoDTO).getUsuario().getApellido());
 		System.out.println(api.obtenerPedido(pedidoDTO).getTaxi().getEmpresa());
 		System.out.println(api.obtenerPedido(pedidoDTO).getTaxi().getChofer());
-
-		// for (Taxi t : api.listarTaxis()) {
-		// System.out.println(t.getId());
-		// System.out.println(t.getPatente());
-		// }
 
 		for (TaxiDTO t : api.listarTaxisLibres()) {
 			System.out.println(t.getId());
