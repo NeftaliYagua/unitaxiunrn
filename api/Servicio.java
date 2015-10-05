@@ -88,7 +88,7 @@ public class Servicio {
 		return new PedidoDTO(pedido);
 	}
 
-	public PedidoDTO actualizarPedido(PedidoDTO pedidoDTO) {// MIRARRRRRRRRR
+	public PedidoDTO actualizarPedido(PedidoDTO pedidoDTO) {
 		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 		ObjectContainer session = db.ext().openSession();
 
@@ -96,27 +96,12 @@ public class Servicio {
 
 		Pedido p = new PedidoDAOImpl(session).getById(pedido.getId());
 
-		// if (pedidoDTO.getTaxi().getId() != null)
-		// if (pedidoDTO.getTaxi().equals(p.getTaxi())) {
-		// Taxi t = new
-		// TaxiDAOImpl(session).getById(pedidoDTO.getTaxi().getId());
-		// pedido.setTaxi(t);
-		// }
-		// if (pedidoDTO.getUsuario().getId() != null)
-		// if (pedidoDTO.getUsuario().equals(p.getUsuario()))
-		// pedido.setUsuario(new
-		// UsuarioDAOImpl(session).getById(pedidoDTO.getUsuario().getId()));
-
+		// Actualizo los campos
 		p.setEstado(pedido.getEstado());
 		p.setFecha(pedido.getFecha());
 		p.setHora(pedido.getHora());
 		p.setPago(pedido.getPago());
 		p.setPrecio(pedido.getPrecio());
-		// p.setTaxi((pedido.getTaxi().getId() == null) ? null
-		// : new TaxiDAOImpl(session).getById(pedidoDTO.getTaxi().getId()));
-		// p.setUsuario((pedido.getUsuario().getId() == null) ? null
-		// : new
-		// UsuarioDAOImpl(session).getById(pedidoDTO.getUsuario().getId()));
 
 		new PedidoDAOImpl(session).guardarPedido(p);
 
