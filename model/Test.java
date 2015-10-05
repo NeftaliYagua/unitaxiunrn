@@ -50,6 +50,7 @@ public class Test {
 		Servicio api = new Servicio();
 
 		UsuarioDTO usuarioDTO = new UsuarioDTO("Horacio", "Munoz", "12345678", "hmunoz@mail.com", "12345678");
+		usuarioDTO = api.crearUsuario(usuarioDTO);
 
 		TaxiDTO taxiDTO = new TaxiDTO("abc 123", "Lopez", "licencia", "Rapitaxi", false);
 		TaxiDTO taxiDTO2 = new TaxiDTO("xyz 789", "Pepito", "licencia", "Rapitaxi", false);
@@ -80,28 +81,29 @@ public class Test {
 		//
 		// }
 
-		PedidoDTO pedidoDTO = new PedidoDTO(2, "fecha", "hora", "EFECTIVO", usuarioDTO, taxiDTO);
+		PedidoDTO pedidoDTO = new PedidoDTO(2, "fecha", "hora", "EFECTIVO", usuarioDTO, null);
 		pedidoDTO = api.crearPedido(pedidoDTO);
+//		pedidoDTO=api.actualizarPedido(pedidoDTO);
 
 		// Testeo modificarlo
 		pedidoDTO.setFecha("Nueva fechaa");
-		api.actualizarPedido(pedidoDTO);
+		pedidoDTO = api.asignarUnTaxi(pedidoDTO, taxiDTO5);
+		// pedidoDTO = api.actualizarPedido(pedidoDTO);
 
-		// Testeo modificarlo
-		pedidoDTO.setFecha("Nueva fechaa");
-		api.actualizarPedido(pedidoDTO);
-
-		PedidoDTO pedidoDTO1 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, taxiDTO5);
+		PedidoDTO pedidoDTO1 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, null);
 		pedidoDTO1 = api.crearPedido(pedidoDTO1);
+		pedidoDTO1 = api.asignarUnTaxi(pedidoDTO1, taxiDTO5);
 
-		PedidoDTO pedidoDTO2 = new PedidoDTO(20, "16-10-2015", "00:00", "CREDITO", usuarioDTO, taxiDTO5);
+		PedidoDTO pedidoDTO2 = new PedidoDTO(20, "16-10-2015", "00:00", "CREDITO", usuarioDTO, null);
 		pedidoDTO2 = api.crearPedido(pedidoDTO2);
+		pedidoDTO2 = api.asignarUnTaxi(pedidoDTO2, taxiDTO5);
 
 		// recupero el pedido de la bd
 		System.out.println(api.obtenerPedido(pedidoDTO).getId());
 		System.out.println(api.obtenerPedido(pedidoDTO).getUsuario().getNombre());
 		System.out.println(api.obtenerPedido(pedidoDTO).getUsuario().getApellido());
 		System.out.println(api.obtenerPedido(pedidoDTO).getTaxi().getEmpresa());
+		System.out.println(api.obtenerPedido(pedidoDTO).getTaxi().getChofer());
 
 		// for (Taxi t : api.listarTaxis()) {
 		// System.out.println(t.getId());
@@ -114,7 +116,7 @@ public class Test {
 		}
 
 		System.out.println("El chofer con mas viajes realizados fue: " + api.listarChoferConMasViajesRealizados());
-		
+
 		api.contarChoferes();
 		
 //		System.out.println(api.distinctNative());
