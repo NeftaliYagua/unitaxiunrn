@@ -89,5 +89,8 @@ public class TaxiDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	public String[] toArray() {
+		String[] cadena = { this.getPatente(), this.getChofer(), this.getEmpresa(), String.valueOf(this.getLibre()) };
+		return cadena;
+	}
 }
