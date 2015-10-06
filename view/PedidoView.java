@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -15,14 +14,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import model.Pedido;
-import model.Usuario;
-
-import javax.swing.SwingUtilities;
-
+import api.Servicio;
 import controller.PedidosController;
+import dto.PedidoDTO;
+import dto.UsuarioDTO;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -51,6 +49,7 @@ public class PedidoView extends javax.swing.JFrame {
 	private JLabel jLabel3;
 	private JLabel jLabel2;
 	private JLabel jLabel1;
+	private Servicio api;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -140,14 +139,17 @@ public class PedidoView extends javax.swing.JFrame {
 					enviar.setFont(new java.awt.Font("Segoe UI", 0, 16));
 					enviar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							Usuario u = new Usuario(nombre.getText(), apellido.getText(), dni.getText(),
+							api = Servicio.getInstance();
+							UsuarioDTO u = new UsuarioDTO(nombre.getText(), apellido.getText(), dni.getText(),
 									"mail hardcodeado", telefono.getText());
+							u = api.crearUsuario(u);
+
 							Date actual = new Date();
 							SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss");
 							SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
 
-							Pedido p = new Pedido(100.0, formatoFecha.format(actual), formatoHora.format(actual),
-									"EFECTIVO", u, null);
+							PedidoDTO p = new PedidoDTO(100.0, formatoFecha.format(actual), formatoHora.format(actual),
+									tipoPago.getSelectedItem().toString(), u, null);
 							PedidosController ctrl = PedidosController.getInstance();
 							ctrl.actualizarPedidos(p);
 							limpiarVentana();
@@ -181,7 +183,7 @@ public class PedidoView extends javax.swing.JFrame {
 				}
 				{
 					ComboBoxModel tipoPagoModel = new DefaultComboBoxModel(
-							new String[] { "Efectivo", "Debito", "Credito" });
+							new String[] { "EFECTIVO", "DEBITO", "CREDITO" });
 					tipoPago = new JComboBox();
 					jPanel1.add(tipoPago);
 					tipoPago.setModel(tipoPagoModel);

@@ -140,7 +140,7 @@ public class RadioTaxiView extends javax.swing.JFrame {
 					asignarTaxi.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							PedidosController ctrl = PedidosController.getInstance();
-							ctrl.gestionarPedido();
+							 ctrl.gestionarPedido();
 						}
 					});
 				}
