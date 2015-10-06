@@ -33,10 +33,16 @@ import model.Usuario;
 public class Servicio {
 
 	private DatabaseManager db4o;
-
 	private static final String DATABASE_FILE = "database.db4o";
-
 	ObjectContainer db;
+	private static Servicio instance = null;
+
+	public static Servicio getInstance() {
+		if (instance == null) {
+			instance = new Servicio();
+		}
+		return instance;
+	}
 
 	public Servicio() {
 		new File(DATABASE_FILE).delete();
@@ -217,7 +223,10 @@ public class Servicio {
 		// obtengo el pedido de la bd
 		Pedido pedido = new PedidoDAOImpl(session).getById(pedidoDTO.getId());
 		Taxi taxi = new TaxiDAOImpl(session).getById(taxiDTO.getId());
+		taxi.setLibre(false);
+
 		pedido.setTaxi(taxi);
+		pedido.setEstado("EN_CURSO");
 
 		new PedidoDAOImpl(session).guardarPedido(pedido);
 
