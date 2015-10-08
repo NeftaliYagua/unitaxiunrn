@@ -14,10 +14,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
-import model.Pedido;
-import model.Taxi;
-import model.Usuario;
+import api.Servicio;
 import controller.PedidosController;
+import dto.PedidoDTO;
+import dto.TaxiDTO;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -39,7 +39,7 @@ public class TaxiView extends javax.swing.JFrame {
 	private JButton botonLibre;
 	private JLabel jLabel1;
 	private JLabel nombreTaxi;
-	private Pedido pedido;
+	private PedidoDTO pedido;
 	private DetallePedidoView detalle;
 
 	/**
@@ -60,7 +60,7 @@ public class TaxiView extends javax.swing.JFrame {
 		initGUI();
 	}
 
-	public TaxiView(Pedido pedido,DetallePedidoView  detalle) {
+	public TaxiView(PedidoDTO pedido, DetallePedidoView detalle) {
 		super();
 		this.pedido = pedido;
 		this.detalle = detalle;
@@ -115,11 +115,17 @@ public class TaxiView extends javax.swing.JFrame {
 					cambiarEstado.setBounds(126, 85, 145, 35);
 					cambiarEstado.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							TaxiView.this.pedido.getTaxi().setLibre(true);
+							// TaxiView.this.pedido.getTaxi().setLibre(true);
+							Servicio api = Servicio.getInstance();
+							TaxiDTO taxiDTO = api.obtenerTaxi(TaxiView.this.pedido.getTaxi());
+							taxiDTO.setLibre(true);
+							taxiDTO = api.actualizarTaxi(taxiDTO);
+
+							// TaxiView.this.pedido.getTaxi().setLibre(true);
 							PedidosController.getInstance().actualizarTaxis();
 							dispose();
 							detalle.dispose();
-							//botonLibre.setEnabled(true);
+							// botonLibre.setEnabled(true);
 
 						}
 					});
@@ -145,10 +151,10 @@ public class TaxiView extends javax.swing.JFrame {
 							String[] titulosCol = { "Notificaciones del taxita" };
 							DefaultTableModel modelo = new DefaultTableModel();
 							modelo.setColumnIdentifiers(titulosCol);
-							if (! "".equals(msj.getText())) {
+							if (!"".equals(msj.getText())) {
 								detalle.setMensajesTable(msj.getText());
 								msj.setText("");
-							}							
+							}
 						}
 					});
 				}

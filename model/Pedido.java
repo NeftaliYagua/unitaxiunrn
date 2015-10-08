@@ -73,6 +73,7 @@ public class Pedido implements Activatable {
 	}
 
 	public void setHora(String hora) {
+		activate(ActivationPurpose.WRITE);
 		this.hora = hora;
 	}
 
@@ -82,6 +83,7 @@ public class Pedido implements Activatable {
 	}
 
 	public void setPago(String pago) {
+		activate(ActivationPurpose.WRITE);
 		this.pago = pago;
 	}
 
@@ -91,6 +93,7 @@ public class Pedido implements Activatable {
 	}
 
 	public void setUsuario(Usuario usuario) {
+		activate(ActivationPurpose.WRITE);
 		this.usuario = usuario;
 	}
 
@@ -100,6 +103,7 @@ public class Pedido implements Activatable {
 	}
 
 	public void setTaxi(Taxi taxi) {
+		activate(ActivationPurpose.WRITE);
 		this.taxi = taxi;
 	}
 
@@ -109,6 +113,7 @@ public class Pedido implements Activatable {
 	}
 
 	public void setEstado(String estado) {
+		activate(ActivationPurpose.WRITE);
 		this.estado = estado;
 	}
 
@@ -129,6 +134,7 @@ public class Pedido implements Activatable {
 	}
 
 	public void setId(String id) {
+		activate(ActivationPurpose.WRITE);
 		this.id = id;
 	}
 
@@ -164,19 +170,14 @@ public class Pedido implements Activatable {
 		_activator = activator;
 	}
 
-	public void asignarTaxi(Taxi taxi) {
-		activate(ActivationPurpose.WRITE);
-		this.setTaxi(taxi);
-	}
-
-	public void copiar(Pedido pedido) {
-		this.setId(pedido.getId());
-		this.setEstado(pedido.getEstado());
-		this.setFecha(pedido.getFecha());
-		this.setHora(pedido.getHora());
-		this.setPago(pedido.getPago());
-		this.setPrecio(pedido.getPrecio());
-		this.setTaxi(pedido.getTaxi());
-		this.setUsuario(pedido.getUsuario());
-	}
+//	public void copiar(Pedido pedido) {
+//		this.setId(pedido.getId());
+//		this.setEstado(pedido.getEstado());
+//		this.setFecha(pedido.getFecha());
+//		this.setHora(pedido.getHora());
+//		this.setPago(pedido.getPago());
+//		this.setPrecio(pedido.getPrecio());
+//		this.setTaxi(pedido.getTaxi());
+//		this.setUsuario(pedido.getUsuario());
+//	}
 }

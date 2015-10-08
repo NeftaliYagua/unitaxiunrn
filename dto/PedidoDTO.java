@@ -52,8 +52,8 @@ public class PedidoDTO {
 		this.hora = pedido.getHora();
 		this.pago = pedido.getPago();
 		this.estado = pedido.getEstado();
-		this.usuario = new UsuarioDTO(pedido.getUsuario());
-		this.taxi = new TaxiDTO(pedido.getTaxi());
+		this.usuario = (pedido.getUsuario() == null) ? null : new UsuarioDTO(pedido.getUsuario());
+		this.taxi = (pedido.getTaxi() == null) ? null : new TaxiDTO(pedido.getTaxi());
 	}
 
 	public double getPrecio() {

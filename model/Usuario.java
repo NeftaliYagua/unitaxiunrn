@@ -47,6 +47,7 @@ public class Usuario implements Activatable {
 	}
 
 	public void setNombre(String nombre) {
+		activate(ActivationPurpose.WRITE);
 		this.nombre = nombre;
 	}
 
@@ -56,6 +57,7 @@ public class Usuario implements Activatable {
 	}
 
 	public void setApellido(String apellido) {
+		activate(ActivationPurpose.WRITE);
 		this.apellido = apellido;
 	}
 
@@ -65,6 +67,7 @@ public class Usuario implements Activatable {
 	}
 
 	public void setDni(String dni) {
+		activate(ActivationPurpose.WRITE);
 		this.dni = dni;
 	}
 
@@ -74,6 +77,7 @@ public class Usuario implements Activatable {
 	}
 
 	public void setMail(String mail) {
+		activate(ActivationPurpose.WRITE);
 		this.mail = mail;
 	}
 
@@ -83,6 +87,7 @@ public class Usuario implements Activatable {
 	}
 
 	public void setTelefono(String telefono) {
+		activate(ActivationPurpose.WRITE);
 		this.telefono = telefono;
 	}
 
@@ -92,6 +97,7 @@ public class Usuario implements Activatable {
 	}
 
 	public void setId(String id) {
+		activate(ActivationPurpose.WRITE);
 		this.id = id;
 	}
 

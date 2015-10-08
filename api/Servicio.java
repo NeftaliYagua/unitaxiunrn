@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
-
-
 import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.ta.TransparentPersistenceSupport;
 
@@ -49,7 +47,7 @@ public class Servicio {
 		}
 		return instance;
 	}
-	
+
 	public Servicio() {
 		new File(DATABASE_FILE).delete();
 		// cfg = Db4oEmbedded.newConfiguration();
@@ -90,11 +88,15 @@ public class Servicio {
 		ObjectContainer session = db.ext().openSession();
 
 		Pedido pedido = crearModeloPedido(pedidoDTO);
-		
+	
+		// Recupero el usuario de la bd
+		if (pedido.getUsuario().getId() != null)
+			pedido.setUsuario(new UsuarioDAOImpl(session).getById(pedido.getUsuario().getId()));		
+
 		// Recupero el usuario de la bd
 		if (pedido.getUsuario().getId() != null)
 			pedido.setUsuario(new UsuarioDAOImpl(session).getById(pedido.getUsuario().getId()));
-		
+
 		new PedidoDAOImpl(session).guardarPedido(pedido);
 
 		session.commit();
@@ -113,10 +115,10 @@ public class Servicio {
 		session.close();
 		return new TaxiDTO(taxi);
 	}
-	
+
 	/* ---------------- Metodos de actualización ---------------- */
-	
-	public PedidoDTO actualizarPedido(PedidoDTO pedidoDTO) {// MIRARRRRRRRRR
+
+	public PedidoDTO actualizarPedido(PedidoDTO pedidoDTO) {
 		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 		ObjectContainer session = db.ext().openSession();
 
@@ -138,7 +140,7 @@ public class Servicio {
 		session.close();
 		return new PedidoDTO(p);
 	}
-	
+
 	public TaxiDTO actualizarTaxi(TaxiDTO taxiDTO) {
 		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 		ObjectContainer session = db.ext().openSession();
@@ -162,7 +164,7 @@ public class Servicio {
 		session.close();
 		return new TaxiDTO(t);
 	}
-	
+
 	public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO) {
 		// ObjectContainer session = Db4oEmbedded.openFile(cfg,DATABASE_FILE);
 		ObjectContainer session = db.ext().openSession();
@@ -311,7 +313,6 @@ public class Servicio {
 
 		// suponiendo que los taxis no se repiten
 
-
 		for (Taxi taxi : taxis) {
 			int cant = new PedidoDAOImpl(session).cantPedidosPorTaxi(taxi);
 			if (cant > max) {
@@ -329,25 +330,30 @@ public class Servicio {
 		List<String> choferes = new LinkedList<String>();
 		ObjectContainer session = db.ext().openSession();
 
-//		List<Pedido> result = session.query(new Predicate<Pedido>() {
-//			public boolean match(Pedido pedido) {
-//				return true;
-//			}
-//		});
-//		ListIterator<Pedido> it = result.listIterator();
+		// List<Pedido> result = session.query(new Predicate<Pedido>() {
+		// public boolean match(Pedido pedido) {
+		// return true;
+		// }
+		// });
+		// ListIterator<Pedido> it = result.listIterator();
 
-		//agrego todos los pedidos a una lista
+		// agrego todos los pedidos a una lista
 		ListIterator<Pedido> it = new PedidoDAOImpl(session).listarPedidos().listIterator();
 
-		//recorro la lista recuperando los choferes y los agrego a una nueva lista
-		while(it.hasNext())
-			choferes.add(it.next().getTaxi().getChofer());
-		
-		//cuento el numero de coincidencias en dicha lista
+		// recorro la lista recuperando los choferes y los agrego a una nueva
+		// lista
+		while (it.hasNext())
+			try {
+				choferes.add(it.next().getTaxi().getChofer());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+		// cuento el numero de coincidencias en dicha lista
 		Map<String, Long> counted = choferes.stream().collect(Collectors.groupingBy(o -> o, Collectors.counting()));
 		
 		System.out.println(counted);
-		
+
 		Map<String, Long> sortedMap = counted.entrySet().stream()
 			    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
@@ -364,7 +370,7 @@ public class Servicio {
 	 */
 
 	private Usuario crearModeloUsuario(UsuarioDTO usuarioDTO) {
-		if (usuarioDTO == null)
+		if (usuarioDTO.getId() == null)
 			return new Usuario(usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getDni(),
 					usuarioDTO.getMail(), usuarioDTO.getTelefono());
 		else
