@@ -352,14 +352,24 @@ public class Servicio {
 		// cuento el numero de coincidencias en dicha lista
 		Map<String, Long> counted = choferes.stream().collect(Collectors.groupingBy(o -> o, Collectors.counting()));
 		
-		System.out.println(counted);
-
+//		System.out.println(counted);
+		
+		// ordeno de mayor a menor el numero de pedidos por chofer
 		Map<String, Long> sortedMap = counted.entrySet().stream()
 			    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
 			          (e1, e2) -> e1, LinkedHashMap::new));
 
-		System.out.println(sortedMap);
+		Long first = sortedMap.get(sortedMap.keySet().toArray()[0]);
+		LinkedList<String> top = new LinkedList<>(); 
+		sortedMap.forEach((k,v) -> {
+				
+				if (first == v) {
+					top.add(k+" : "+v);
+				}		 		
+		});
+		
+		System.out.println(top.toString());
 		
 		session.close();
 	}
