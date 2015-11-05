@@ -359,7 +359,16 @@ public class Servicio {
 			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
 			          (e1, e2) -> e1, LinkedHashMap::new));
 
-		System.out.println(sortedMap);
+		Long first = sortedMap.get(sortedMap.keySet().toArray()[0]);
+		LinkedList<String> top = new LinkedList<>(); 
+		sortedMap.forEach((k,v) -> {
+				
+				if (first == v) {
+					top.add(k+" : "+v);
+				}		 		
+		});
+		
+		System.out.println(top.toString());
 		
 		session.close();
 	}

@@ -78,6 +78,7 @@ public class Test {
 		// TEST
 
 		taxiDTO5 = api.obtenerTaxi(taxiDTO5);
+		taxiDTO2 = api.obtenerTaxi(taxiDTO2);
 		// Set choferes = api.distinctNative();
 		//
 		// for( Iterator it = choferes.iterator(); it.hasNext();) {
@@ -101,7 +102,15 @@ public class Test {
 
 		PedidoDTO pedidoDTO2 = new PedidoDTO(20, "16-10-2015", "00:00", "CREDITO", usuarioDTO, null);
 		pedidoDTO2 = api.crearPedido(pedidoDTO2);
-		pedidoDTO2 = api.asignarUnTaxi(pedidoDTO2, taxiDTO5);
+		pedidoDTO2 = api.asignarUnTaxi(pedidoDTO2, taxiDTO2);
+		
+//		PedidoDTO pedidoDTO3 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, null);
+//		pedidoDTO3 = api.crearPedido(pedidoDTO3);
+//		pedidoDTO3 = api.asignarUnTaxi(pedidoDTO3, taxiDTO2);
+		
+		PedidoDTO pedidoDTO4 = new PedidoDTO(20, "26-09-2015", "08:10", "DEBITO", usuarioDTO, null);
+		pedidoDTO4 = api.crearPedido(pedidoDTO4);
+		pedidoDTO4 = api.asignarUnTaxi(pedidoDTO4, taxiDTO4);	
 
 		// recupero el pedido de la bd
 		System.out.println(api.obtenerPedido(pedidoDTO).getId());
